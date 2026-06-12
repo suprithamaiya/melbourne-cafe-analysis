@@ -42,13 +42,11 @@ cafes <- clue_raw |>
 
 # Quick check
 nrow(cafes)
-unique(cafes$`Census year`) |> sort()
-unique(cafes$`Seating type`)
 
 # Save filtered data
 write_csv(cafes, here("data/raw/cafes_filtered.csv"))
 ```
-
+### References
 ## Blog Post
 
 ```{r growth-over-time}
@@ -99,6 +97,24 @@ p2002 + p2024 +
   plot_annotation(title = "Café Seating Capacity Across Melbourne: 2002 vs 2024")
 ```
 
+```{r suburb-bar-chart}
+suburb_2024 <- cafes |>
+  filter(`Census year` == 2024) |>
+  group_by(`CLUE small area`) |>
+  summarise(total_seats = sum(`Number of seats`, na.rm = TRUE),
+            .groups = "drop") |>
+  arrange(desc(total_seats))
+
+ggplot(suburb_2024, aes(x = reorder(`CLUE small area`, total_seats), 
+                         y = total_seats)) +
+  geom_col(fill = "#6F4E37") +
+  coord_flip() +
+  labs(title = "Total Café Seating by Suburb (2024)",
+       x = NULL, y = "Total Seats") +
+  theme_minimal()
+```
+
+
 ```{r covid-seating}
 covid_period <- cafes |>
   filter(`Census year` >= 2018) |>
@@ -120,9 +136,80 @@ ggplot(covid_period, aes(x = `Census year`, y = total_seats,
        x = "Year", y = "Total Seats", colour = "Seating Type") +
   theme_minimal()
 ```
+
+
+```{r equity-analysis}
+# SA2 lookup
+sa2_lookup <- read_excel(
+  here("data/raw/Metadata/2021Census_geog_desc_1st_2nd_3rd_release.xlsx"),
+  sheet = "2021_ASGS_MAIN_Structures"
+) |>
+  filter(ASGS_Structure == "SA2") |>
+  select(SA2_CODE_2021 = Census_Code_2021,
+         SA2_NAME_2021 = Census_Name_2021)
+
+# Income data
+g02 <- read_csv(here("data/raw/2021Census_G02_VIC_SA2.csv")) |>
+  select(SA2_CODE_2021,
+         median_weekly_income = Median_tot_hhd_inc_weekly) |>
+  mutate(SA2_CODE_2021 = as.character(SA2_CODE_2021))
+
+# Population data
+g01 <- read_csv(here("data/raw/2021Census_G01_VIC_SA2.csv")) |>
+  select(SA2_CODE_2021, population = Tot_P_P) |>
+  mutate(SA2_CODE_2021 = as.character(SA2_CODE_2021))
+
+# Join both to SA2 names
+abs_data <- g02 |>
+  left_join(g01, by = "SA2_CODE_2021") |>
+  left_join(sa2_lookup, by = "SA2_CODE_2021") |>
+  select(suburb = SA2_NAME_2021, median_weekly_income, population)
+
+# Manual suburb name mapping
+name_mapping <- tribble(
+  ~clue_name,                        ~abs_name,
+  "Melbourne (CBD)",                  "Melbourne CBD - North",
+  "Carlton",                          "Carlton",
+  "Docklands",                        "Docklands",
+  "East Melbourne",                   "East Melbourne",
+  "Kensington",                       "Kensington (Vic.)",
+  "North Melbourne",                  "North Melbourne",
+  "Parkville",                        "Parkville",
+  "Southbank",                        "Southbank",
+  "South Yarra",                      "South Yarra - West",
+  "Port Melbourne",                   "Port Melbourne",
+  "West Melbourne (Industrial)",      "West Melbourne",
+  "West Melbourne (Residential)",     "West Melbourne"
+)
+
+# Join seating data with ABS data
+equity_data <- suburb_2024 |>
+  left_join(name_mapping, by = c("CLUE small area" = "clue_name")) |>
+  left_join(abs_data, by = c("abs_name" = "suburb")) |>
+  filter(!is.na(median_weekly_income)) |>
+  mutate(seats_per_1000 = (total_seats / population) * 1000)
+
+# Scatter plot: seats per 1000 residents vs median income
+ggplot(equity_data, aes(x = median_weekly_income, y = seats_per_1000,
+                         label = `CLUE small area`)) +
+  geom_point(colour = "#6F4E37", size = 3) +
+  geom_smooth(method = "lm", se = TRUE, colour = "#D4A574") +
+  ggrepel::geom_text_repel(size = 3) +
+  labs(title = "Café Seats per 1,000 Residents vs Median Household Income (2024)",
+       x = "Median Weekly Household Income ($)",
+       y = "Café Seats per 1,000 Residents") +
+  theme_minimal()
+```
+```{r regression-model}
+model <- lm(seats_per_1000 ~ median_weekly_income, data = equity_data)
+summary(model)
+```
+
+
+### References
+
 ## Behind the Scenes
 
-## References
 
 ## AI Acknowledgement
 
