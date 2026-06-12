@@ -1,0 +1,129 @@
+---
+title: "ETC5512: Assignment 4"
+author: "Supritha Ramakrishna Maiya (35196726)"
+format:
+  html:
+    code-fold: true
+    code-summary: "Show code"
+    toc: true
+    toc-depth: 3
+editor: visual
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE) 
+```
+# Melbourne's Café Scene
+::: {.panel-tabset}
+
+## Data Details
+```{r load-libraries, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(here)
+library(sf)
+library(readxl)
+```
+
+```{r load-clue-data}
+# Load raw CLUE café data
+clue_raw <- read_csv(here("data/raw/cafes-and-restaurants-with-seating-capacity.csv"))
+
+# Inspect
+glimpse(clue_raw)
+
+unique(clue_raw$`Census year`) |> sort()
+
+unique(clue_raw$`Industry (ANZSIC4) description`)
+```
+
+
+```{r filter-cafes}
+cafes <- clue_raw |>
+  filter(`Industry (ANZSIC4) description` == "Cafes and Restaurants")
+
+# Quick check
+nrow(cafes)
+unique(cafes$`Census year`) |> sort()
+unique(cafes$`Seating type`)
+
+# Save filtered data
+write_csv(cafes, here("data/raw/cafes_filtered.csv"))
+```
+
+## Blog Post
+
+```{r growth-over-time}
+growth_total <- cafes |>
+  group_by(`Census year`) |>
+  summarise(
+    n_cafes = n_distinct(paste(`Trading name`, `Business address`)),
+    total_seats = sum(`Number of seats`, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# Line chart: total seats over time
+ggplot(growth_total, aes(x = `Census year`, y = total_seats)) +
+  geom_line(colour = "#6F4E37", linewidth = 1) +
+  geom_point(colour = "#6F4E37", size = 2) +
+  scale_x_continuous(breaks = seq(2002, 2024, by = 2)) +
+  labs(title = "Total Café Seating Capacity in Melbourne (2002–2024)",
+       x = "Year", y = "Total Seats") +
+  theme_minimal()
+```
+
+
+```{r spatial-map}
+library(patchwork)
+
+cafe_2002_sf <- cafes |>
+  filter(`Census year` == 2002) |>
+  filter(!is.na(Longitude), !is.na(Latitude)) |>
+  st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326)
+
+cafe_2024_sf <- cafes |>
+  filter(`Census year` == 2024) |>
+  filter(!is.na(Longitude), !is.na(Latitude)) |>
+  st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326)
+
+p2002 <- ggplot(cafe_2002_sf) +
+  geom_sf(aes(size = `Number of seats`), alpha = 0.4, colour = "#6F4E37") +
+  labs(title = "2002", size = "Seats") +
+  theme_void() +
+  theme(legend.position = "none")
+
+p2024 <- ggplot(cafe_2024_sf) +
+  geom_sf(aes(size = `Number of seats`), alpha = 0.4, colour = "#6F4E37") +
+  labs(title = "2024", size = "Seats") +
+  theme_void()
+
+p2002 + p2024 + 
+  plot_annotation(title = "Café Seating Capacity Across Melbourne: 2002 vs 2024")
+```
+
+```{r covid-seating}
+covid_period <- cafes |>
+  filter(`Census year` >= 2018) |>
+  group_by(`Census year`, `Seating type`) |>
+  summarise(total_seats = sum(`Number of seats`, na.rm = TRUE),
+            .groups = "drop")
+
+ggplot(covid_period, aes(x = `Census year`, y = total_seats, 
+                          colour = `Seating type`)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  geom_vline(xintercept = 2020, linetype = "dashed", colour = "red") +
+  annotate("text", x = 2020.2, y = max(covid_period$total_seats) * 0.95,
+           label = "COVID-19", hjust = 0, colour = "red", size = 3.5) +
+  scale_colour_manual(values = c("Seats - Indoor" = "#6F4E37", 
+                                  "Seats - Outdoor" = "#D4A574")) +
+  scale_x_continuous(breaks = 2018:2024) +
+  labs(title = "Indoor vs Outdoor Café Seating Before and After COVID-19",
+       x = "Year", y = "Total Seats", colour = "Seating Type") +
+  theme_minimal()
+```
+## Behind the Scenes
+
+## References
+
+## AI Acknowledgement
+
+:::
