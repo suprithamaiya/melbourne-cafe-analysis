@@ -76,6 +76,15 @@ Datasets 2–4 are available from the ABS Census DataPacks page. Select 2021 Cen
 - **Licence:** Creative Commons Attribution 4.0 International (CC BY 4.0)
 - **Variables used:** SA2 codes and names for joining G01/G02 to suburb names
 
+**Dataset 5: City of Melbourne — Suburb Boundary Shapefile**
+
+- **Source:** City of Melbourne Open Data Portal
+- **Type:**  Geospatial reference file
+- **Licence:**  Creative Commons Attribution 4.0 International (CC BY 4.0)
+- **Variables used:**  `mccid_int` (postcode), polygon geometry
+- **Limitations:**  No suburb name labels(postcode to suburb name mapping was done manually).
+- **Ethics:**  No personal data involved.
+
 ### Question 3 
 *Describe the steps to download your data and any steps to process your data for your analysis. Save your raw and processed data.*
 
@@ -210,33 +219,148 @@ write_csv(equity_data, here("data/processed/cafe_equity_analysis.csv"))
 ### Question 4
 *In your submission, include comprehensive details of the data you used (e.g. read me, meta data file, a data dictionary. This may also include a sample data example if useful.)*
 
-| Variable | Dataset | Description | Type |
-|---|---|---|---|
-| Census year | CLUE | Year of the annual business census (2002–2024) | Numeric |
-| CLUE small area | CLUE | Suburb/precinct name within City of Melbourne LGA | Character |
-| Trading name | CLUE | Business trading name | Character |
-| Business address | CLUE | Full street address of business | Character |
-| Industry (ANZSIC4) description | CLUE | Business industry classification | Character |
-| Seating type | CLUE | Indoor or outdoor seating | Character |
-| Number of seats | CLUE | Licensed seating capacity | Numeric |
-| Longitude | CLUE | WGS84 longitude coordinate | Numeric |
-| Latitude | CLUE | WGS84 latitude coordinate | Numeric |
-| Median_tot_hhd_inc_weekly | ABS G02 | Median weekly household income by SA2 | Numeric |
-| Tot_P_P | ABS G01 | Total resident population by SA2 | Numeric |
-| SA2_CODE_2021 | ABS Metadata | 9-digit SA2 geographic code | Character |
-| SA2_NAME_2021 | ABS Metadata | SA2 suburb name | Character |
-| seats_per_1000 | Derived | Café seats per 1,000 residents (total_seats / population × 1000) | Numeric |
+```{r data-dict}
+# Data dictionary CSV
+data_dict <- tibble(
+  Variable = c("Census year", "CLUE small area", "Trading name", 
+               "Business address", "Industry (ANZSIC4) description",
+               "Seating type", "Number of seats", "Longitude", "Latitude",
+               "Median_tot_hhd_inc_weekly", "Tot_P_P", "SA2_CODE_2021",
+               "SA2_NAME_2021", "seats_per_1000"),
+  Dataset = c("CLUE", "CLUE", "CLUE", "CLUE", "CLUE", "CLUE", "CLUE", 
+              "CLUE", "CLUE", "ABS G02", "ABS G01", "ABS Metadata",
+              "ABS Metadata", "Derived"),
+  Description = c("Year of annual business census (2002-2024)",
+                  "Suburb/precinct name within City of Melbourne LGA",
+                  "Business trading name",
+                  "Full street address of business",
+                  "Business industry classification",
+                  "Indoor or outdoor seating",
+                  "Licensed seating capacity",
+                  "WGS84 longitude coordinate",
+                  "WGS84 latitude coordinate",
+                  "Median weekly household income by SA2",
+                  "Total resident population by SA2",
+                  "9-digit SA2 geographic code",
+                  "SA2 suburb name",
+                  "Cafe seats per 1000 residents"),
+  Type = c("Numeric", "Character", "Character", "Character", "Character",
+           "Character", "Numeric", "Numeric", "Numeric", "Numeric",
+           "Numeric", "Character", "Character", "Numeric")
+)
 
+write_csv(data_dict, here("data/data-dictionary.csv"))
+
+# Sample data
+cafes |> slice_head(n = 5) |> 
+  write_csv(here("data/sample-clue.csv"))
+
+equity_data |> slice_head(n = 5) |> 
+  write_csv(here("data/sample-equity.csv"))
+```
+
+```{r metadata}
+metadata <- tibble(
+  Attribute = c("Source", "Structure", "Methodology", "Topic", 
+                "Geographic coverage", "Temporal coverage", 
+                "Licence", "Last updated", "Maintenance"),
+  `Dataset 1 (CLUE)` = c("City of Melbourne Open Data Portal", 
+                          "Tabular CSV", 
+                          "Annual business census",
+                          "Food business seating capacity",
+                          "City of Melbourne LGA",
+                          "2002–2024",
+                          "CC BY 4.0",
+                          "2024",
+                          "City of Melbourne annually"),
+  `Dataset 2 (ABS G02)` = c("Australian Bureau of Statistics",
+                              "Tabular CSV",
+                              "5-yearly population census",
+                              "Household income",
+                              "Victoria, SA2 level",
+                              "2021",
+                              "CC BY 4.0",
+                              "2022",
+                              "ABS every 5 years"),
+  `Dataset 3 (ABS G01)` = c("Australian Bureau of Statistics",
+                              "Tabular CSV",
+                              "5-yearly population census",
+                              "Population counts",
+                              "Victoria, SA2 level",
+                              "2021",
+                              "CC BY 4.0",
+                              "2022",
+                              "ABS every 5 years"),
+  `Dataset 4 (ASGS)` = c("Australian Bureau of Statistics",
+                          "Excel lookup",
+                          "Administrative geography standard",
+                          "Geographic boundaries",
+                          "Australia-wide",
+                          "2021",
+                          "CC BY 4.0",
+                          "2022",
+                          "ABS every 5 years"),
+  `Dataset 5 (Postcodes)` = c("City of Melbourne Open Data Portal",
+                               "Shapefile",
+                               "Administrative boundary file",
+                               "Suburb boundaries",
+                               "City of Melbourne LGA",
+                               "2003–2011",
+                               "CC BY 4.0",
+                               "2011",
+                               "City of Melbourne")
+)
+
+write_csv(metadata, here("data/metadata.csv"))
+```
+
+**CLUE Dataset Variables:**
+
+- **Census year** *(Numeric)*: Year of the annual business census (2002–2024)
+- **CLUE small area** *(Character)*: Suburb/precinct name within City of Melbourne LGA
+- **Trading name** *(Character)*: Business trading name
+- **Business address** *(Character)*: Full street address of business
+- **Industry (ANZSIC4) description** *(Character)*: Business industry classification
+- **Seating type** *(Character)*: Indoor or outdoor seating
+- **Number of seats** *(Numeric)*: Licensed seating capacity
+- **Longitude** *(Numeric)*: WGS84 longitude coordinate
+- **Latitude** *(Numeric)*: WGS84 latitude coordinate
+
+**ABS G02 Variables:**
+
+- **Median_tot_hhd_inc_weekly** *(Numeric)*: Median weekly household income by SA2
+
+**ABS G01 Variables:**
+
+- **Tot_P_P** *(Numeric)*: Total resident population by SA2
+
+**ABS Metadata Variables:**
+
+- **SA2_CODE_2021** *(Character)*: 9-digit SA2 geographic code
+- **SA2_NAME_2021** *(Character)*: SA2 suburb name
+
+**Derived Variables:**
+
+- **seats_per_1000** *(Numeric)*: Café seats per 1,000 residents (total_seats / population × 1,000)
+- **abs_name** *(Character)*: Matched ABS SA2 name used to join CLUE suburb to ABS data
+- **median_weekly_income** *(Numeric)*: Population-weighted median income after SA2 aggregation
+- **population** *(Numeric)*: Total resident population after SA2 aggregation
+
+For full variable definitions see 'data/data-dictionary.csv'. Sample records from the raw CLUE data and processed equity dataset are available in `data/sample-clue.csv` and `data/sample-equity.csv`.
 
 ### References
-
-City of Melbourne Open Data Team. (2015). Cafes and restaurants with seating capacity [Data set]. Melbourne Open Data Portal. <https://data.melbourne.vic.gov.au/explore/dataset/cafes-and-restaurants-with-seating-capacity/information/>
 
 Australian Bureau of Statistics. (2021). 2021 Census community profiles: General community profile (G01) [Data set]. <https://www.abs.gov.au/census/find-census-data/datapacks>
 
 Australian Bureau of Statistics. (2021). 2021 Census community profiles: Selected medians and averages (G02) [Data set]. <https://www.abs.gov.au/census/find-census-data/datapacks>
 
 Australian Bureau of Statistics. (2021). 2021 Australian Statistical Geography Standard (ASGS) geographic structures [Data file]. <https://www.abs.gov.au/census/find-census-data/datapacks>
+
+Blue Tokai Coffee Roasters. (n.d.). About us. <https://bluetokaicoffee.com/pages/about-us>
+
+City of Melbourne Open Data Team. (2015). Cafes and restaurants with seating capacity [Data set]. Melbourne Open Data Portal. <https://data.melbourne.vic.gov.au/explore/dataset/cafes-and-restaurants-with-seating-capacity/information/>
+
+Hatti Kaapi Food & Beverages. (n.d.). Hatti Kaapi Food & Beverages [Company page]. LinkedIn. <https://www.linkedin.com/company/hatti-kaapi-food-beverages/>
 
 ## Blog Post
 
@@ -275,7 +399,25 @@ growth_total |>
 ```
 
 
+
 ```{r spatial-map}
+postcodes_sf <- st_read(here("data/raw/postcodes/postcodes.shp")) |>
+  st_transform(crs = 4326) |>
+  mutate(suburb_name = case_when(
+    mccid_int == 3000 ~ "Melbourne CBD",
+    mccid_int == 3053 ~ "Carlton",
+    mccid_int == 3008 ~ "Docklands",
+    mccid_int == 3002 ~ "East Melbourne",
+    mccid_int == 3031 ~ "Kensington",
+    mccid_int == 3051 ~ "North Melbourne",
+    mccid_int == 3052 ~ "Parkville",
+    mccid_int == 3006 ~ "Southbank",
+    mccid_int == 3141 ~ "South Yarra",
+    mccid_int == 3207 ~ "Port Melbourne",
+    mccid_int == 3003 ~ "West Melbourne",
+    TRUE ~ ""
+  ))
+
 cafe_2002_sf <- cafes |>
   filter(`Census year` == 2002) |>
   filter(!is.na(Longitude), !is.na(Latitude)) |>
@@ -286,20 +428,38 @@ cafe_2024_sf <- cafes |>
   filter(!is.na(Longitude), !is.na(Latitude)) |>
   st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326)
 
-p2002 <- ggplot(cafe_2002_sf) +
-  geom_sf(aes(size = `Number of seats`), alpha = 0.4, colour = "#6F4E37") +
+p2002 <- ggplot() +
+  geom_sf(data = postcodes_sf, fill = "grey95", colour = "grey70", linewidth = 0.3) +
+  geom_sf_text(data = postcodes_sf, aes(label = suburb_name), 
+               size = 2, colour = "grey30") +
+  geom_sf(data = cafe_2002_sf, aes(size = `Number of seats`), 
+          alpha = 0.5, colour = "#6F4E37") +
+  scale_size_continuous(range = c(1, 8), limits = c(0, 1300)) +
+  coord_sf(xlim = c(144.89, 144.99), ylim = c(-37.86, -37.77)) +
   labs(title = "2002", size = "Seats") +
   theme_void() +
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5, face = "bold"))
 
-p2024 <- ggplot(cafe_2024_sf) +
-  geom_sf(aes(size = `Number of seats`), alpha = 0.4, colour = "#6F4E37") +
+p2024 <- ggplot() +
+  geom_sf(data = postcodes_sf, fill = "grey95", colour = "grey70", linewidth = 0.3) +
+  geom_sf_text(data = postcodes_sf, aes(label = suburb_name), 
+               size = 2, colour = "grey30") +
+  geom_sf(data = cafe_2024_sf, aes(size = `Number of seats`), 
+          alpha = 0.5, colour = "#6F4E37") +
+  scale_size_continuous(range = c(1, 8), limits = c(0, 1300)) +
+  coord_sf(xlim = c(144.89, 144.99), ylim = c(-37.86, -37.77)) +
   labs(title = "2024", size = "Seats") +
-  theme_void()
+  theme_void() +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"))
 
-p2002 + p2024 + 
-  plot_annotation(title = "Café Seating Capacity Across Melbourne: 2002 vs 2024")
+p2002 + p2024 +
+  plot_annotation(
+    title = "Café Seating Capacity Across Melbourne: 2002 vs 2024",
+  )
 ```
+
+
 Total seating capacity more than doubled between 2002 and 2017, climbing from 85,349 to 151,199 seats. The spatial maps show cafés spreading further across the inner city by 2024, with larger concentrations appearing outside the CBD core compared to 2002.
 
 But the growth story has a twist: the decline started before COVID. Seating was already falling from 2018 i.e. two years before the pandemic hit. And here's what makes it stranger: the number of cafés kept rising until 2019, even as total seats fell.
@@ -349,7 +509,7 @@ Indoor seats fell sharply,from around 124,000 in 2019 to 110,000 by 2021. Outdoo
 By 2024, indoor seating has partially recovered but remains below its pre-pandemic level. This current dataset cannot determine whether the pattern represents a permanent shift or a slow return to baseline.
 
 ### Does wealth buy you better café access?
-I expected wealthier suburbs to have more cafés. The data says the opposite and the relationship is statistically significant (p = 0.013, R² = 0.55). Higher income is actually associated with fewer café seats per resident.
+I expected wealthier suburbs to have more cafés. Despite the small sample size , the data says the opposite and the relationship is statistically significant (p = 0.013, R² = 0.55). Higher income is actually associated with fewer café seats per resident.
 
 ```{r equity-plot}
 ggplot(equity_data, aes(x = median_weekly_income, y = seats_per_1000,
@@ -422,6 +582,9 @@ Wickham H, Averick M, Bryan J, Chang W, McGowan LD, François R, Grolemund G, Ha
 Wickham H, Bryan J (2025). _readxl: Read Excel Files_. R package version 1.4.5,
   <https://CRAN.R-project.org/package=readxl>.
 
+Xie Y (2024). _knitr: A General-Purpose Package for Dynamic Report Generation in R_. R package version 1.49,
+  <https://yihui.org/knitr/>.
+
 ## Behind the Scenes
 
 ### Question 5
@@ -435,7 +598,7 @@ Also, the ABS metadata file added an another layer of complexity, I'd assumed th
 
 A repetitive task that had to be carried out was to download both G02 and G01 files from the ABS website, as population counts were essential for calculating cafe seats per 1,000 residents, which is a useful metric for my last sub-question than total seats alone.
 
-Also, the weighted mean aggregation then had to be repeated three times — for Southbank, Melbourne CBD, and South Yarra — each of which is split across multiple SA2s in the ABS data.
+When CLUE small areas overlapped with multiple SA2 boundaries, median weekly income was estimated using a population-weighted mean. This was used as an approximation because individual-level income data was not available. The same method was applied across all affected suburbs, including Southbank, Melbourne CBD, and South Yarra.
 
 ### Question 6
 *Were there any challenges that you faced in conducting this analysis. These may take the form of data limitations or coding challenges? (e.g. Was there anything in your analysis that you were not anticipating when you started? Did you have to change your intended scope? Did you need to master a new skill? Were there any problems you were proud of solving?)*
@@ -463,14 +626,18 @@ AI was useful for explaining topics such as coordinate reference systems, EPSG c
 AI was used mainly as a troubleshooting and learning tool throughout the assignment. I provided detailed context, including code snippets, dataset structures, and intermediate outputs, to help diagnose problems and understand unfamiliar concepts.
 
 Overall, AI served as a learning and troubleshooting resource, while the analysis, coding, interpretation, and writing were my own work.
+
 ### Question 9
 *Submit 4 earlier versions of your .qmd files to show your iterative process. These versions must show iterations of your work (not just a linear progression of Task 1, Task 2, Task 3, citations). Reflect on the progress made between each versions by providing a short statement for markers of what you fixed/learnt/improved/changed between each file. Also like to reflect on what changed between your first checklist submission. (Note: There is an expectation for students familiar with GitHub that you will submit a Github repository and refer to 4 individual commits.)*
 
-My GitHub repository is at https://github.com/suprithamaiya/melbourne-cafe-analysis. 
+My GitHub repository is at <https://github.com/suprithamaiya/melbourne-cafe-analysis.>
+
 The commits document the iterative process:
-V1: Basic scaffolding — CLUE data loading, filtering, and initial charts. I was still exploring what to proceed with.
-V2: Added equity analysis, suburb bar chart, scatter plot, regression, and references placeholders. Identified the geographic boundary mismatch as a key challenge.
-V3: I began to write the content and realized a lot of my initial assumptions about the data were incorrect.Restructured Task 1, made various code changes, completed blog post write-up.
+
+- V1: Basic scaffolding — CLUE data loading, filtering, and initial charts. I was still exploring what to proceed with.
+- V2: Added equity analysis, suburb bar chart, scatter plot, regression, and references placeholders. Identified the geographic boundary mismatch as a challenge.
+- V3: I began to write the content once I had this structure and realized a lot of my initial assumptions about the data were incorrect.Restructured Task 1, made various code changes, completed blog post write-up.
+- V4: Improved spatial map with suburb boundary outlines and labels, expanded upon Question 4 according to all data sets used, added external data dictionary and sample files, updated README with correct file structure.
 
 ### References 
 
@@ -485,8 +652,6 @@ In practice, I used AI to:
 - Explain R functions and concepts needed to clean and tidy my data.
 
 - Provide general advice on coding approaches in R, which I then adapted and applied to my own dataset.
-
-- Help troubleshoot coding errors and understand unfamiliar topics such as coordinate reference systems and weighted means.
 
 The processing decisions, coding, and written submission were done by me.
 

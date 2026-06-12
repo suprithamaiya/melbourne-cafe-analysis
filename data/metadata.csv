@@ -1,0 +1,10 @@
+Attribute,Dataset 1 (CLUE),Dataset 2 (ABS G02),Dataset 3 (ABS G01),Dataset 4 (ASGS),Dataset 5 (Postcodes)
+Source,City of Melbourne Open Data Portal,Australian Bureau of Statistics,Australian Bureau of Statistics,Australian Bureau of Statistics,City of Melbourne Open Data Portal
+Structure,Tabular CSV,Tabular CSV,Tabular CSV,Excel lookup,Shapefile
+Methodology,Annual business census,5-yearly population census,5-yearly population census,Administrative geography standard,Administrative boundary file
+Topic,Food business seating capacity,Household income,Population counts,Geographic boundaries,Suburb boundaries
+Geographic coverage,City of Melbourne LGA,"Victoria, SA2 level","Victoria, SA2 level",Australia-wide,City of Melbourne LGA
+Temporal coverage,2002–2024,2021,2021,2021,2003–2011
+Licence,CC BY 4.0,CC BY 4.0,CC BY 4.0,CC BY 4.0,CC BY 4.0
+Last updated,2024,2022,2022,2022,2011
+Maintenance,City of Melbourne annually,ABS every 5 years,ABS every 5 years,ABS every 5 years,City of Melbourne

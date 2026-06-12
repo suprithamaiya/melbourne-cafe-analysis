@@ -1,0 +1,15 @@
+Variable,Dataset,Description,Type
+Census year,CLUE,Year of annual business census (2002-2024),Numeric
+CLUE small area,CLUE,Suburb/precinct name within City of Melbourne LGA,Character
+Trading name,CLUE,Business trading name,Character
+Business address,CLUE,Full street address of business,Character
+Industry (ANZSIC4) description,CLUE,Business industry classification,Character
+Seating type,CLUE,Indoor or outdoor seating,Character
+Number of seats,CLUE,Licensed seating capacity,Numeric
+Longitude,CLUE,WGS84 longitude coordinate,Numeric
+Latitude,CLUE,WGS84 latitude coordinate,Numeric
+Median_tot_hhd_inc_weekly,ABS G02,Median weekly household income by SA2,Numeric
+Tot_P_P,ABS G01,Total resident population by SA2,Numeric
+SA2_CODE_2021,ABS Metadata,9-digit SA2 geographic code,Character
+SA2_NAME_2021,ABS Metadata,SA2 suburb name,Character
+seats_per_1000,Derived,Cafe seats per 1000 residents,Numeric
