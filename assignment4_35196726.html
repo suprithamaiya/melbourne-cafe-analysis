@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Supritha Ramakrishna Maiya (35196726)">
+<meta name="dcterms.date" content="2026-06-12">
 
 <title>ETC5512: Assignment 4</title>
 <style>
@@ -102,6 +103,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           </div>
   </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 12, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -117,173 +124,338 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Data Details</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Blog Post</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Behind the Scenes</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">AI Acknowledgement</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<section id="question-1" class="level3">
+<h3 class="anchored" data-anchor-id="question-1">Question 1</h3>
+<p><em>What is the question you are aiming to answer in your blog post? (You may have multiple sub-questions.) Share why you chose this question.</em></p>
+<p>How has Melbourne’s café and dining scene evolved over two decades (2002–2024), and is seating capacity distributed equitably across suburbs?</p>
+<p>This question is explored through three sub-questions:</p>
+<ul>
+<li>How has Melbourne’s café scene grown from 2002 to 2024, and which suburbs have consistently dominated by seating capacity?</li>
+<li>Did COVID-19 (2020–2021) cause a measurable shift from indoor to outdoor seating across Melbourne?</li>
+<li>Do higher-income suburbs have disproportionately more seating capacity per resident?</li>
+</ul>
+<p>I chose this question because I come from Bangalore - also a coffee city. South Indian filter coffee is famous among Bangaloreans, and in recent years Bangalore’s café culture has expanded far beyond that signature drink, with roasters like Blue Tokai, Benki Coffee, and Hatti Kappi redefining the scene.</p>
+<p>Moving to Melbourne, a city whose café culture is part of its global identity, I was curious whether that reputation is actually backed by data — and whether it extends equally across the city.</p>
+</section>
+<section id="question-2" class="level3">
+<h3 class="anchored" data-anchor-id="question-2">Question 2</h3>
+<p><em>What data will you be using to answer that question? Explain why this data is suitable for the task. This means make clear the type of data (census, sample, experimental), data licence, data limitations and any ethical considerations, including those related to data privacy. The relevant details here will depend on the data you choose and the analysis you perform.</em></p>
+<p>Dataset 1 can be downloaded from the City of Melbourne Open Data Portal at data.melbourne.vic.gov.au, searching for “Café, Restaurant and Bistro Seats.”</p>
+<p><strong>Dataset 1: Café, Restaurant and Bistro Seats — City of Melbourne CLUE</strong></p>
+<ul>
+<li><strong>Source:</strong> City of Melbourne Open Data Portal</li>
+<li><strong>Type:</strong> Census</li>
+<li><strong>Licence:</strong> Creative Commons Attribution 4.0 International (CC BY 4.0)</li>
+<li><strong>Coverage:</strong> 2002–2024</li>
+<li><strong>Variables used:</strong> Census year, CLUE small area (suburb), Trading name, Business address, Seating type (Indoor/Outdoor), Number of seats, Longitude, Latitude</li>
+<li><strong>Limitations:</strong> Coverage is limited to the City of Melbourne LGA only — it does not capture broader metropolitan Melbourne. Seat counts reflect licensed capacity, not actual usage. Some records in early years (particularly 2002) have missing coordinate data.</li>
+<li><strong>Ethics:</strong> No personal data is involved. All records are at the business level only.</li>
+</ul>
+<p>Datasets 2–4 are available from the ABS Census DataPacks page. Select 2021 Census, General Community Profile, Victoria, SA2. Download G01 and G02 CSV files and the ASGS metadata Excel file.</p>
+<p><strong>Dataset 2: ABS Census 2021 — General Community Profile (G02), Victoria, SA2</strong></p>
+<ul>
+<li><strong>Source:</strong> Australian Bureau of Statistics Census DataPacks</li>
+<li><strong>Type:</strong> Census — a complete population count</li>
+<li><strong>Licence:</strong> Creative Commons Attribution 4.0 International (CC BY 4.0)</li>
+<li><strong>Variables used:</strong> Median weekly household income (<code>Median_tot_hhd_inc_weekly</code>)</li>
+<li><strong>Limitations:</strong> 2021 Census data may not perfectly reflect 2024 suburb demographics. Also,SA2 boundaries do not align with CLUE small areas.</li>
+<li><strong>Ethics:</strong> Only aggregate-level data used. No individual records involved.</li>
+</ul>
+<p><strong>Dataset 3: ABS Census 2021 — General Community Profile (G01), Victoria, SA2</strong></p>
+<ul>
+<li><strong>Source:</strong> Australian Bureau of Statistics Census DataPacks</li>
+<li><strong>Type:</strong> Census</li>
+<li><strong>Licence:</strong> Creative Commons Attribution 4.0 International (CC BY 4.0)</li>
+<li><strong>Variables used:</strong> Total population (<code>Tot_P_P</code>)</li>
+<li><strong>Limitations:</strong> Same as Dataset 2.</li>
+<li><strong>Ethics:</strong> Aggregate data only.</li>
+</ul>
+<p><strong>Dataset 4: ABS 2021 Census — Geographic Descriptor File</strong></p>
+<ul>
+<li><strong>Source:</strong> Australian Bureau of Statistics Census DataPacks</li>
+<li><strong>Type:</strong> Reference/lookup file</li>
+<li><strong>Licence:</strong> Creative Commons Attribution 4.0 International (CC BY 4.0)</li>
+<li><strong>Variables used:</strong> SA2 codes and names for joining G01/G02 to suburb names</li>
+</ul>
+</section>
+<section id="question-3" class="level3">
+<h3 class="anchored" data-anchor-id="question-3">Question 3</h3>
+<p><em>Describe the steps to download your data and any steps to process your data for your analysis. Save your raw and processed data.</em></p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load raw CLUE café data</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>clue_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data/raw/cafes-and-restaurants-with-seating-capacity.csv"</span>))</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(clue_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>clue_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data/raw/cafes-and-restaurants-with-seating-capacity.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 66,356
-Columns: 15
-$ `Census year`                    &lt;dbl&gt; 2014, 2014, 2014, 2014, 2014, 2014, 2…
-$ `Block ID`                       &lt;dbl&gt; 68, 68, 72, 72, 72, 72, 72, 72, 72, 7…
-$ `Property ID`                    &lt;dbl&gt; 107766, 108989, 105375, 105375, 10572…
-$ `Base property ID`               &lt;dbl&gt; 107766, 108989, 105375, 105375, 10572…
-$ `Building address`               &lt;chr&gt; "22 Punch Lane MELBOURNE 3000", "199-…
-$ `CLUE small area`                &lt;chr&gt; "Melbourne (CBD)", "Melbourne (CBD)",…
-$ `Trading name`                   &lt;chr&gt; "Lucattini's Italian Restaurant", "Hu…
-$ `Business address`               &lt;chr&gt; "Ground , 22 Punch Lane MELBOURNE 300…
-$ `Industry (ANZSIC4) code`        &lt;dbl&gt; 4511, 4511, 4511, 4511, 4511, 4511, 4…
-$ `Industry (ANZSIC4) description` &lt;chr&gt; "Cafes and Restaurants", "Cafes and R…
-$ `Seating type`                   &lt;chr&gt; "Seats - Indoor", "Seats - Indoor", "…
-$ `Number of seats`                &lt;dbl&gt; 54, 31, 30, 30, 30, 20, 12, 120, 24, …
-$ Longitude                        &lt;dbl&gt; 144.9711, 144.9721, 144.9548, 144.954…
-$ Latitude                         &lt;dbl&gt; -37.81036, -37.81013, -37.81350, -37.…
-$ location                         &lt;chr&gt; "-37.81036225, 144.9710753", "-37.810…</code></pre>
-</div>
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(clue_raw<span class="sc">$</span><span class="st">`</span><span class="at">Census year</span><span class="st">`</span>) <span class="sc">|&gt;</span> <span class="fu">sort</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] 2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016
-[16] 2017 2018 2019 2020 2021 2022 2023 2024</code></pre>
-</div>
-<details class="code-fold">
-<summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(clue_raw<span class="sc">$</span><span class="st">`</span><span class="at">Industry (ANZSIC4) description</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "Cafes and Restaurants"                                                          
- [2] "Pubs, Taverns and Bars"                                                         
- [3] "Takeaway Food Services"                                                         
- [4] "Bakery Product Manufacturing (Non-factory based)"                               
- [5] "Other Specialised Food Retailing"                                               
- [6] "Accommodation"                                                                  
- [7] "Sports and Physical Recreation Venues, Grounds and Facilities Operation"        
- [8] "Catering Services"                                                              
- [9] "Automotive Body, Paint and Interior Repair"                                     
-[10] "Other Gambling Activities"                                                      
-[11] "Houseware Retailing"                                                            
-[12] "Zoological and Botanical Gardens Operation"                                     
-[13] "Clubs (Hospitality)"                                                            
-[14] "Other Store-Based Retailing n.e.c."                                             
-[15] "Internet Service Providers and Web Search Portals"                              
-[16] "Performing Arts Venue Operation"                                                
-[17] "Supermarket and Grocery Stores"                                                 
-[18] "Non-Residential Property Operators"                                             
-[19] "Other Administrative Services n.e.c."                                           
-[20] "Performing Arts Operation"                                                      
-[21] "Laundry and Dry-Cleaning Services"                                              
-[22] "Religious Services"                                                             
-[23] "Sports and Physical Recreation Clubs and Sports Professionals"                  
-[24] "Other Personal Services n.e.c."                                                 
-[25] "Amusement and Other Recreational Activities n.e.c."                             
-[26] "Car Retailing"                                                                  
-[27] "Fruit and Vegetable Retailing"                                                  
-[28] "Casino Operation"                                                               
-[29] "Convenience Store"                                                              
-[30] "Womens Clothing Retailing"                                                      
-[31] "Other Interest Group Services n.e.c."                                           
-[32] "Diet and Weight Reduction Centre Operation"                                     
-[33] "Hairdressing and Beauty Services"                                               
-[34] "Motor Cycle Retailing"                                                          
-[35] "Technical and Vocational Education and Training"                                
-[36] "Horse and Dog Racing Administration and Track Operation"                        
-[37] "Oil and Gas Extraction"                                                         
-[38] "Other Social Assistance Services"                                               
-[39] "Sport and Camping Equipment Retailing"                                          
-[40] "Newspaper and Book Retailing"                                                   
-[41] "Architectural Services"                                                         
-[42] "Banking"                                                                        
-[43] "Liquor Retailing"                                                               
-[44] "Entertainment Media Retailing"                                                  
-[45] "Other Food Product Manufacturing n.e.c."                                        
-[46] "Amusement Parks and Centres Operation"                                          
-[47] "Clothing Retailing"                                                             
-[48] "Museum Operation"                                                               
-[49] "Telecommunication Goods Wholesaling"                                            
-[50] "Health and Fitness Centres and Gymnasia Operation"                              
-[51] "Fresh Meat, Fish and Poultry Retailing"                                         
-[52] "Hospitals (except Psychiatric Hospitals)"                                       
-[53] "Business and Professional Association Services"                                 
-[54] "Scientific Research Services"                                                   
-[55] "Fuel Retailing"                                                                 
-[56] "Pharmaceutical, Cosmetic and Toiletry Goods Retailing"                          
-[57] "Flower Retailing"                                                               
-[58] "Motion Picture Exhibition"                                                      
-[59] "Mens Clothing Retailing"                                                        
-[60] "Watch and Jewellery Retailing"                                                  
-[61] "Electricity Transmission"                                                       
-[62] "Other Auxiliary Finance and Investment Services"                                
-[63] "Other Personal Accessory Retailing"                                             
-[64] "Computer System Design and Related Services"                                    
-[65] "Fruit and Vegetable Wholesaling"                                                
-[66] "Professional Photographic Services"                                             
-[67] "Higher Education"                                                               
-[68] "Common Area"                                                                    
-[69] "Furniture Retailing"                                                            
-[70] "Sports and Physical Recreation Instruction"                                     
-[71] "Management Advice and Other Consulting Services"                                
-[72] "Electronic (except Domestic Appliance) and Precision Equipment Repair and Maint"
-[73] "Cereal, Pasta and Baking Mix Manufacturing"                                     </code></pre>
-</div>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cafes <span class="ot">&lt;-</span> clue_raw <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Industry (ANZSIC4) description</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Cafes and Restaurants"</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Quick check</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(cafes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cafes <span class="ot">&lt;-</span> clue_raw <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Industry (ANZSIC4) description</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Cafes and Restaurants"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Save filtered data</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(cafes, <span class="fu">here</span>(<span class="st">"data/processed/cafes_filtered.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 49749</code></pre>
 </div>
+<p>The raw CLUE dataset contains multiple industry types. I filtered by the ANZSIC4 code “Cafes and Restaurants” only, as other categories (e.g.&nbsp;pubs, fast food) are outside the scope of this analysis.</p>
+<div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save filtered data</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(cafes, <span class="fu">here</span>(<span class="st">"data/raw/cafes_filtered.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>suburb_2024 <span class="ot">&lt;-</span> cafes <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Census year</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">CLUE small area</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_seats =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Number of seats</span><span class="st">`</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_seats))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<p>To enable an equity analysis, median household income and population data were drawn from the ABS 2021 Census. CLUE uses its own suburb naming conventions that differ from ABS SA2 names, a manual look up table is constructed to bridge the two systems, where a CLUE suburb maps to multiple ABS SA2s (e.g.&nbsp;Southbank spans two SA2s), a population-weighted mean income was calculated rather than a simple average.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SA2 lookup</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sa2_lookup <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">"data/raw/Metadata/2021Census_geog_desc_1st_2nd_3rd_release.xlsx"</span>),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sheet =</span> <span class="st">"2021_ASGS_MAIN_Structures"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ASGS_Structure <span class="sc">==</span> <span class="st">"SA2"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">SA2_CODE_2021 =</span> Census_Code_2021,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">SA2_NAME_2021 =</span> Census_Name_2021)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Income data</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>g02 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data/raw/2021Census_G02_VIC_SA2.csv"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(SA2_CODE_2021,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">median_weekly_income =</span> Median_tot_hhd_inc_weekly) <span class="sc">|&gt;</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SA2_CODE_2021 =</span> <span class="fu">as.character</span>(SA2_CODE_2021))</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Population data</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>g01 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data/raw/2021Census_G01_VIC_SA2.csv"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(SA2_CODE_2021, <span class="at">population =</span> Tot_P_P) <span class="sc">|&gt;</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SA2_CODE_2021 =</span> <span class="fu">as.character</span>(SA2_CODE_2021))</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Join both to SA2 names</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>abs_data <span class="ot">&lt;-</span> g02 <span class="sc">|&gt;</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(g01, <span class="at">by =</span> <span class="st">"SA2_CODE_2021"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sa2_lookup, <span class="at">by =</span> <span class="st">"SA2_CODE_2021"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">suburb =</span> SA2_NAME_2021, median_weekly_income, population)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggregate split Southbank SA2s using population-weighted mean</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>southbank_weighted <span class="ot">&lt;-</span> abs_data <span class="sc">|&gt;</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(suburb, <span class="st">"Southbank"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">suburb =</span> <span class="st">"Southbank"</span>,</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_weekly_income =</span> <span class="fu">weighted.mean</span>(median_weekly_income, population),</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">population =</span> <span class="fu">sum</span>(population)</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>abs_data <span class="ot">&lt;-</span> abs_data <span class="sc">|&gt;</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(suburb, <span class="st">"Southbank"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(southbank_weighted)</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggregate split CBD SA2s using population-weighted mean</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>cbd_weighted <span class="ot">&lt;-</span> abs_data <span class="sc">|&gt;</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(suburb, <span class="st">"Melbourne CBD"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">suburb =</span> <span class="st">"Melbourne (CBD)"</span>,</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_weekly_income =</span> <span class="fu">weighted.mean</span>(median_weekly_income, population),</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">population =</span> <span class="fu">sum</span>(population)</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>abs_data <span class="ot">&lt;-</span> abs_data <span class="sc">|&gt;</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(suburb, <span class="st">"Melbourne CBD"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(cbd_weighted)</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggregate split CBD SA2s using population-weighted mean</span></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>southyarra_weighted <span class="ot">&lt;-</span> abs_data <span class="sc">|&gt;</span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(suburb, <span class="st">"South Yarra"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">suburb =</span> <span class="st">"South Yarra"</span>,</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_weekly_income =</span> <span class="fu">weighted.mean</span>(median_weekly_income, population),</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">population =</span> <span class="fu">sum</span>(population)</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>abs_data <span class="ot">&lt;-</span> abs_data <span class="sc">|&gt;</span></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(suburb, <span class="st">"South Yarra"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(southyarra_weighted)</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a><span class="co"># Manual suburb name mapping</span></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>name_mapping <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>clue_name,                        <span class="sc">~</span>abs_name,</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Melbourne (CBD)"</span>,                  <span class="st">"Melbourne (CBD)"</span>,</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Carlton"</span>,                          <span class="st">"Carlton"</span>,</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Docklands"</span>,                        <span class="st">"Docklands"</span>,</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>  <span class="st">"East Melbourne"</span>,                   <span class="st">"East Melbourne"</span>,</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Kensington"</span>,                       <span class="st">"Kensington (Vic.)"</span>,</span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>  <span class="st">"North Melbourne"</span>,                  <span class="st">"North Melbourne"</span>,</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Parkville"</span>,                        <span class="st">"Parkville"</span>,</span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Southbank"</span>,                        <span class="st">"Southbank"</span>,</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>  <span class="st">"South Yarra"</span>,                      <span class="st">"South Yarra"</span>,</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Port Melbourne"</span>,                   <span class="st">"Port Melbourne"</span>,</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>  <span class="st">"West Melbourne (Industrial)"</span>,      <span class="st">"West Melbourne - Industrial"</span>,</span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>  <span class="st">"West Melbourne (Residential)"</span>,     <span class="st">"West Melbourne - Residential"</span></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a><span class="co"># Build equity dataset</span></span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>equity_data <span class="ot">&lt;-</span> suburb_2024 <span class="sc">|&gt;</span></span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(name_mapping, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"CLUE small area"</span> <span class="ot">=</span> <span class="st">"clue_name"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(abs_data, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"abs_name"</span> <span class="ot">=</span> <span class="st">"suburb"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(median_weekly_income)) <span class="sc">|&gt;</span></span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">seats_per_1000 =</span> (total_seats <span class="sc">/</span> population) <span class="sc">*</span> <span class="dv">1000</span>)</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(equity_data, <span class="fu">here</span>(<span class="st">"data/processed/cafe_equity_analysis.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="question-4" class="level3">
+<h3 class="anchored" data-anchor-id="question-4">Question 4</h3>
+<p><em>In your submission, include comprehensive details of the data you used (e.g.&nbsp;read me, meta data file, a data dictionary. This may also include a sample data example if useful.)</em></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Dataset</th>
+<th>Description</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Census year</td>
+<td>CLUE</td>
+<td>Year of the annual business census (2002–2024)</td>
+<td>Numeric</td>
+</tr>
+<tr class="even">
+<td>CLUE small area</td>
+<td>CLUE</td>
+<td>Suburb/precinct name within City of Melbourne LGA</td>
+<td>Character</td>
+</tr>
+<tr class="odd">
+<td>Trading name</td>
+<td>CLUE</td>
+<td>Business trading name</td>
+<td>Character</td>
+</tr>
+<tr class="even">
+<td>Business address</td>
+<td>CLUE</td>
+<td>Full street address of business</td>
+<td>Character</td>
+</tr>
+<tr class="odd">
+<td>Industry (ANZSIC4) description</td>
+<td>CLUE</td>
+<td>Business industry classification</td>
+<td>Character</td>
+</tr>
+<tr class="even">
+<td>Seating type</td>
+<td>CLUE</td>
+<td>Indoor or outdoor seating</td>
+<td>Character</td>
+</tr>
+<tr class="odd">
+<td>Number of seats</td>
+<td>CLUE</td>
+<td>Licensed seating capacity</td>
+<td>Numeric</td>
+</tr>
+<tr class="even">
+<td>Longitude</td>
+<td>CLUE</td>
+<td>WGS84 longitude coordinate</td>
+<td>Numeric</td>
+</tr>
+<tr class="odd">
+<td>Latitude</td>
+<td>CLUE</td>
+<td>WGS84 latitude coordinate</td>
+<td>Numeric</td>
+</tr>
+<tr class="even">
+<td>Median_tot_hhd_inc_weekly</td>
+<td>ABS G02</td>
+<td>Median weekly household income by SA2</td>
+<td>Numeric</td>
+</tr>
+<tr class="odd">
+<td>Tot_P_P</td>
+<td>ABS G01</td>
+<td>Total resident population by SA2</td>
+<td>Numeric</td>
+</tr>
+<tr class="even">
+<td>SA2_CODE_2021</td>
+<td>ABS Metadata</td>
+<td>9-digit SA2 geographic code</td>
+<td>Character</td>
+</tr>
+<tr class="odd">
+<td>SA2_NAME_2021</td>
+<td>ABS Metadata</td>
+<td>SA2 suburb name</td>
+<td>Character</td>
+</tr>
+<tr class="even">
+<td>seats_per_1000</td>
+<td>Derived</td>
+<td>Café seats per 1,000 residents (total_seats / population × 1000)</td>
+<td>Numeric</td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="references" class="level3">
 <h3 class="anchored" data-anchor-id="references">References</h3>
+<p>City of Melbourne Open Data Team. (2015). Cafes and restaurants with seating capacity [Data set]. Melbourne Open Data Portal. <a href="https://data.melbourne.vic.gov.au/explore/dataset/cafes-and-restaurants-with-seating-capacity/information/" class="uri">https://data.melbourne.vic.gov.au/explore/dataset/cafes-and-restaurants-with-seating-capacity/information/</a></p>
+<p>Australian Bureau of Statistics. (2021). 2021 Census community profiles: General community profile (G01) [Data set]. <a href="https://www.abs.gov.au/census/find-census-data/datapacks" class="uri">https://www.abs.gov.au/census/find-census-data/datapacks</a></p>
+<p>Australian Bureau of Statistics. (2021). 2021 Census community profiles: Selected medians and averages (G02) [Data set]. <a href="https://www.abs.gov.au/census/find-census-data/datapacks" class="uri">https://www.abs.gov.au/census/find-census-data/datapacks</a></p>
+<p>Australian Bureau of Statistics. (2021). 2021 Australian Statistical Geography Standard (ASGS) geographic structures [Data file]. <a href="https://www.abs.gov.au/census/find-census-data/datapacks" class="uri">https://www.abs.gov.au/census/find-census-data/datapacks</a></p>
 </section>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>I grew up in Bangalore,another city that takes its coffee seriously. When I moved to Melbourne, I heard that Melbourne is synonymous with café culture. Is that reputation backed by data?</p>
+<p>Using two decades of business census data from the City of Melbourne, this post looks at how the café scene has grown, where it actually lives, what COVID did to it, and whether café access follows wealth.</p>
+<section id="the-decline-that-predates-covid" class="level3">
+<h3 class="anchored" data-anchor-id="the-decline-that-predates-covid">The decline that predates COVID</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>growth_total <span class="ot">&lt;-</span> cafes <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Census year</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_cafes =</span> <span class="fu">n_distinct</span>(<span class="fu">paste</span>(<span class="st">`</span><span class="at">Trading name</span><span class="st">`</span>, <span class="st">`</span><span class="at">Business address</span><span class="st">`</span>)),</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_seats =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Number of seats</span><span class="st">`</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Line chart: total seats over time</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(growth_total, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Census year</span><span class="st">`</span>, <span class="at">y =</span> total_seats)) <span class="sc">+</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">colour =</span> <span class="st">"#6F4E37"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#6F4E37"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">2002</span>, <span class="dv">2024</span>, <span class="at">by =</span> <span class="dv">2</span>)) <span class="sc">+</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Total Café Seating Capacity in Melbourne (2002–2024)"</span>,</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Total Seats"</span>) <span class="sc">+</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>growth_total <span class="ot">&lt;-</span> cafes <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Census year</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_cafes =</span> <span class="fu">n_distinct</span>(<span class="fu">paste</span>(<span class="st">`</span><span class="at">Trading name</span><span class="st">`</span>, <span class="st">`</span><span class="at">Business address</span><span class="st">`</span>)),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_seats =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Number of seats</span><span class="st">`</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Line chart: total seats over time</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(growth_total, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Census year</span><span class="st">`</span>, <span class="at">y =</span> total_seats)) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">colour =</span> <span class="st">"#6F4E37"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#6F4E37"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">2002</span>, <span class="dv">2024</span>, <span class="at">by =</span> <span class="dv">2</span>)) <span class="sc">+</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Total Café Seating Capacity in Melbourne (2002–2024)"</span>,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Total Seats"</span>) <span class="sc">+</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -296,31 +468,168 @@ $ location                         &lt;chr&gt; "-37.81036225, 144.9710753", "-37
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>cafe_2002_sf <span class="ot">&lt;-</span> cafes <span class="sc">|&gt;</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Census year</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">2002</span>) <span class="sc">|&gt;</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Longitude), <span class="sc">!</span><span class="fu">is.na</span>(Latitude)) <span class="sc">|&gt;</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Longitude"</span>, <span class="st">"Latitude"</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>cafe_2024_sf <span class="ot">&lt;-</span> cafes <span class="sc">|&gt;</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Census year</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Longitude), <span class="sc">!</span><span class="fu">is.na</span>(Latitude)) <span class="sc">|&gt;</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Longitude"</span>, <span class="st">"Latitude"</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>p2002 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(cafe_2002_sf) <span class="sc">+</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">size =</span> <span class="st">`</span><span class="at">Number of seats</span><span class="st">`</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>, <span class="at">colour =</span> <span class="st">"#6F4E37"</span>) <span class="sc">+</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"2002"</span>, <span class="at">size =</span> <span class="st">"Seats"</span>) <span class="sc">+</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>p2024 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(cafe_2024_sf) <span class="sc">+</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">size =</span> <span class="st">`</span><span class="at">Number of seats</span><span class="st">`</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>, <span class="at">colour =</span> <span class="st">"#6F4E37"</span>) <span class="sc">+</span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"2024"</span>, <span class="at">size =</span> <span class="st">"Seats"</span>) <span class="sc">+</span></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>p2002 <span class="sc">+</span> p2024 <span class="sc">+</span> </span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Café Seating Capacity Across Melbourne: 2002 vs 2024"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>growth_total <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="st">`</span><span class="at">Census year</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Year"</span>, <span class="st">"Number of Cafés"</span>, <span class="st">"Total Seats"</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="dv">0</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Year</th>
+<th style="text-align: right;">Number of Cafés</th>
+<th style="text-align: right;">Total Seats</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">886</td>
+<td style="text-align: right;">85349</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2003</td>
+<td style="text-align: right;">914</td>
+<td style="text-align: right;">89736</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2004</td>
+<td style="text-align: right;">944</td>
+<td style="text-align: right;">93258</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2005</td>
+<td style="text-align: right;">1025</td>
+<td style="text-align: right;">102271</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2006</td>
+<td style="text-align: right;">1065</td>
+<td style="text-align: right;">104592</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2007</td>
+<td style="text-align: right;">1111</td>
+<td style="text-align: right;">106533</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2008</td>
+<td style="text-align: right;">1169</td>
+<td style="text-align: right;">111081</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2009</td>
+<td style="text-align: right;">1253</td>
+<td style="text-align: right;">118420</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2010</td>
+<td style="text-align: right;">1301</td>
+<td style="text-align: right;">116700</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2011</td>
+<td style="text-align: right;">1363</td>
+<td style="text-align: right;">123649</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2012</td>
+<td style="text-align: right;">1428</td>
+<td style="text-align: right;">128098</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">1539</td>
+<td style="text-align: right;">137477</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2014</td>
+<td style="text-align: right;">1620</td>
+<td style="text-align: right;">144786</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2015</td>
+<td style="text-align: right;">1663</td>
+<td style="text-align: right;">146297</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2016</td>
+<td style="text-align: right;">1725</td>
+<td style="text-align: right;">149891</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2017</td>
+<td style="text-align: right;">1738</td>
+<td style="text-align: right;">151199</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2018</td>
+<td style="text-align: right;">1756</td>
+<td style="text-align: right;">148256</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2019</td>
+<td style="text-align: right;">1771</td>
+<td style="text-align: right;">147688</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2020</td>
+<td style="text-align: right;">1649</td>
+<td style="text-align: right;">136792</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2021</td>
+<td style="text-align: right;">1595</td>
+<td style="text-align: right;">131451</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2022</td>
+<td style="text-align: right;">1536</td>
+<td style="text-align: right;">127270</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2023</td>
+<td style="text-align: right;">1561</td>
+<td style="text-align: right;">123977</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2024</td>
+<td style="text-align: right;">1645</td>
+<td style="text-align: right;">130223</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cafe_2002_sf <span class="ot">&lt;-</span> cafes <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Census year</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">2002</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Longitude), <span class="sc">!</span><span class="fu">is.na</span>(Latitude)) <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Longitude"</span>, <span class="st">"Latitude"</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>cafe_2024_sf <span class="ot">&lt;-</span> cafes <span class="sc">|&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Census year</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Longitude), <span class="sc">!</span><span class="fu">is.na</span>(Latitude)) <span class="sc">|&gt;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Longitude"</span>, <span class="st">"Latitude"</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>p2002 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(cafe_2002_sf) <span class="sc">+</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">size =</span> <span class="st">`</span><span class="at">Number of seats</span><span class="st">`</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>, <span class="at">colour =</span> <span class="st">"#6F4E37"</span>) <span class="sc">+</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"2002"</span>, <span class="at">size =</span> <span class="st">"Seats"</span>) <span class="sc">+</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>p2024 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(cafe_2024_sf) <span class="sc">+</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">size =</span> <span class="st">`</span><span class="at">Number of seats</span><span class="st">`</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>, <span class="at">colour =</span> <span class="st">"#6F4E37"</span>) <span class="sc">+</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"2024"</span>, <span class="at">size =</span> <span class="st">"Seats"</span>) <span class="sc">+</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>()</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>p2002 <span class="sc">+</span> p2024 <span class="sc">+</span> </span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_annotation</span>(<span class="at">title =</span> <span class="st">"Café Seating Capacity Across Melbourne: 2002 vs 2024"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -330,23 +639,22 @@ $ location                         &lt;chr&gt; "-37.81036225, 144.9710753", "-37
 </div>
 </div>
 </div>
+<p>Total seating capacity more than doubled between 2002 and 2017, climbing from 85,349 to 151,199 seats. The spatial maps show cafés spreading further across the inner city by 2024, with larger concentrations appearing outside the CBD core compared to 2002.</p>
+<p>But the growth story has a twist: the decline started before COVID. Seating was already falling from 2018 i.e.&nbsp;two years before the pandemic hit. And here’s what makes it stranger: the number of cafés kept rising until 2019, even as total seats fell.</p>
+<p>This means that there were more venues but smaller ones. Way before COVID came into the picture, Melbourne’s cafes were possibly impacted by other factors such as rising rents, shifting dining habits, or merely market saturation.</p>
+</section>
+<section id="where-the-coffee-actually-is" class="level3">
+<h3 class="anchored" data-anchor-id="where-the-coffee-actually-is">Where the coffee actually is</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>suburb_2024 <span class="ot">&lt;-</span> cafes <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Census year</span><span class="st">`</span> <span class="sc">==</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">CLUE small area</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_seats =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Number of seats</span><span class="st">`</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_seats))</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(suburb_2024, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(<span class="st">`</span><span class="at">CLUE small area</span><span class="st">`</span>, total_seats), </span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> total_seats)) <span class="sc">+</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#6F4E37"</span>) <span class="sc">+</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Total Café Seating by Suburb (2024)"</span>,</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Total Seats"</span>) <span class="sc">+</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(suburb_2024, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(<span class="st">`</span><span class="at">CLUE small area</span><span class="st">`</span>, total_seats), </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> total_seats)) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#6F4E37"</span>) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Total Café Seating by Suburb (2024)"</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Total Seats"</span>) <span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -356,28 +664,33 @@ $ location                         &lt;chr&gt; "-37.81036225, 144.9710753", "-37
 </div>
 </div>
 </div>
+<p>The CBD absolutely dominates when it comes to cafes as it holds more than four times the seating of Southbank, the next highest suburb. Southbank, Carlton, and Docklands form a distant second tier, and every other suburb barely has a presence.</p>
+<p>Melbourne’s café culture, for all its citywide reputation, is really an inner-CBD story.</p>
+</section>
+<section id="the-impact-of-covid" class="level3">
+<h3 class="anchored" data-anchor-id="the-impact-of-covid">The Impact of COVID</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>covid_period <span class="ot">&lt;-</span> cafes <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Census year</span><span class="st">`</span> <span class="sc">&gt;=</span> <span class="dv">2018</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Census year</span><span class="st">`</span>, <span class="st">`</span><span class="at">Seating type</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_seats =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Number of seats</span><span class="st">`</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(covid_period, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Census year</span><span class="st">`</span>, <span class="at">y =</span> total_seats, </span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>                          <span class="at">colour =</span> <span class="st">`</span><span class="at">Seating type</span><span class="st">`</span>)) <span class="sc">+</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">2020</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">colour =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">2020.2</span>, <span class="at">y =</span> <span class="fu">max</span>(covid_period<span class="sc">$</span>total_seats) <span class="sc">*</span> <span class="fl">0.95</span>,</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">"COVID-19"</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Seats - Indoor"</span> <span class="ot">=</span> <span class="st">"#6F4E37"</span>, </span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"Seats - Outdoor"</span> <span class="ot">=</span> <span class="st">"#D4A574"</span>)) <span class="sc">+</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">2018</span><span class="sc">:</span><span class="dv">2024</span>) <span class="sc">+</span></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Indoor vs Outdoor Café Seating Before and After COVID-19"</span>,</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Total Seats"</span>, <span class="at">colour =</span> <span class="st">"Seating Type"</span>) <span class="sc">+</span></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>covid_period <span class="ot">&lt;-</span> cafes <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Census year</span><span class="st">`</span> <span class="sc">&gt;=</span> <span class="dv">2018</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Census year</span><span class="st">`</span>, <span class="st">`</span><span class="at">Seating type</span><span class="st">`</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_seats =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Number of seats</span><span class="st">`</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(covid_period, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">`</span><span class="at">Census year</span><span class="st">`</span>, <span class="at">y =</span> total_seats, </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                          <span class="at">colour =</span> <span class="st">`</span><span class="at">Seating type</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">2020</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">colour =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="fl">2020.2</span>, <span class="at">y =</span> <span class="fu">max</span>(covid_period<span class="sc">$</span>total_seats) <span class="sc">*</span> <span class="fl">0.95</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">"COVID-19"</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Seats - Indoor"</span> <span class="ot">=</span> <span class="st">"#6F4E37"</span>, </span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">"Seats - Outdoor"</span> <span class="ot">=</span> <span class="st">"#D4A574"</span>)) <span class="sc">+</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">2018</span><span class="sc">:</span><span class="dv">2024</span>) <span class="sc">+</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Indoor vs Outdoor Café Seating Before and After COVID-19"</span>,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Total Seats"</span>, <span class="at">colour =</span> <span class="st">"Seating Type"</span>) <span class="sc">+</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -387,74 +700,29 @@ $ location                         &lt;chr&gt; "-37.81036225, 144.9710753", "-37
 </div>
 </div>
 </div>
+<p>Indoor seats fell sharply,from around 124,000 in 2019 to 110,000 by 2021. Outdoor seating barely moved across the same period. Both seating types declined in parallel, which rules out the simple narrative that venues adapted by shifting outdoors. If venues were pivoting to alfresco dining as a survival strategy, it isn’t visible here.</p>
+<p>By 2024, indoor seating has partially recovered but remains below its pre-pandemic level. This current dataset cannot determine whether the pattern represents a permanent shift or a slow return to baseline.</p>
+</section>
+<section id="does-wealth-buy-you-better-café-access" class="level3">
+<h3 class="anchored" data-anchor-id="does-wealth-buy-you-better-café-access">Does wealth buy you better café access?</h3>
+<p>I expected wealthier suburbs to have more cafés. The data says the opposite and the relationship is statistically significant (p = 0.013, R² = 0.55). Higher income is actually associated with fewer café seats per resident.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SA2 lookup</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>sa2_lookup <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">"data/raw/Metadata/2021Census_geog_desc_1st_2nd_3rd_release.xlsx"</span>),</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sheet =</span> <span class="st">"2021_ASGS_MAIN_Structures"</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ASGS_Structure <span class="sc">==</span> <span class="st">"SA2"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">SA2_CODE_2021 =</span> Census_Code_2021,</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">SA2_NAME_2021 =</span> Census_Name_2021)</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Income data</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>g02 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data/raw/2021Census_G02_VIC_SA2.csv"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(SA2_CODE_2021,</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">median_weekly_income =</span> Median_tot_hhd_inc_weekly) <span class="sc">|&gt;</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SA2_CODE_2021 =</span> <span class="fu">as.character</span>(SA2_CODE_2021))</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Population data</span></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>g01 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data/raw/2021Census_G01_VIC_SA2.csv"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(SA2_CODE_2021, <span class="at">population =</span> Tot_P_P) <span class="sc">|&gt;</span></span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SA2_CODE_2021 =</span> <span class="fu">as.character</span>(SA2_CODE_2021))</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Join both to SA2 names</span></span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>abs_data <span class="ot">&lt;-</span> g02 <span class="sc">|&gt;</span></span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(g01, <span class="at">by =</span> <span class="st">"SA2_CODE_2021"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sa2_lookup, <span class="at">by =</span> <span class="st">"SA2_CODE_2021"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">suburb =</span> SA2_NAME_2021, median_weekly_income, population)</span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Manual suburb name mapping</span></span>
-<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>name_mapping <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>clue_name,                        <span class="sc">~</span>abs_name,</span>
-<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Melbourne (CBD)"</span>,                  <span class="st">"Melbourne CBD - North"</span>,</span>
-<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Carlton"</span>,                          <span class="st">"Carlton"</span>,</span>
-<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Docklands"</span>,                        <span class="st">"Docklands"</span>,</span>
-<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>  <span class="st">"East Melbourne"</span>,                   <span class="st">"East Melbourne"</span>,</span>
-<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Kensington"</span>,                       <span class="st">"Kensington (Vic.)"</span>,</span>
-<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>  <span class="st">"North Melbourne"</span>,                  <span class="st">"North Melbourne"</span>,</span>
-<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Parkville"</span>,                        <span class="st">"Parkville"</span>,</span>
-<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Southbank"</span>,                        <span class="st">"Southbank"</span>,</span>
-<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">"South Yarra"</span>,                      <span class="st">"South Yarra - West"</span>,</span>
-<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Port Melbourne"</span>,                   <span class="st">"Port Melbourne"</span>,</span>
-<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>  <span class="st">"West Melbourne (Industrial)"</span>,      <span class="st">"West Melbourne"</span>,</span>
-<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>  <span class="st">"West Melbourne (Residential)"</span>,     <span class="st">"West Melbourne"</span></span>
-<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Join seating data with ABS data</span></span>
-<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>equity_data <span class="ot">&lt;-</span> suburb_2024 <span class="sc">|&gt;</span></span>
-<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(name_mapping, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"CLUE small area"</span> <span class="ot">=</span> <span class="st">"clue_name"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(abs_data, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"abs_name"</span> <span class="ot">=</span> <span class="st">"suburb"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(median_weekly_income)) <span class="sc">|&gt;</span></span>
-<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">seats_per_1000 =</span> (total_seats <span class="sc">/</span> population) <span class="sc">*</span> <span class="dv">1000</span>)</span>
-<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatter plot: seats per 1000 residents vs median income</span></span>
-<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(equity_data, <span class="fu">aes</span>(<span class="at">x =</span> median_weekly_income, <span class="at">y =</span> seats_per_1000,</span>
-<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>                         <span class="at">label =</span> <span class="st">`</span><span class="at">CLUE small area</span><span class="st">`</span>)) <span class="sc">+</span></span>
-<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#6F4E37"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">colour =</span> <span class="st">"#D4A574"</span>) <span class="sc">+</span></span>
-<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Café Seats per 1,000 Residents vs Median Household Income (2024)"</span>,</span>
-<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Median Weekly Household Income ($)"</span>,</span>
-<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Café Seats per 1,000 Residents"</span>) <span class="sc">+</span></span>
-<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(equity_data, <span class="fu">aes</span>(<span class="at">x =</span> median_weekly_income, <span class="at">y =</span> seats_per_1000,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">label =</span> <span class="st">`</span><span class="at">CLUE small area</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#6F4E37"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">colour =</span> <span class="st">"#D4A574"</span>) <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Café Seats per 1,000 Residents vs Median Household Income (2024)"</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Median Weekly Household Income ($)"</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Café Seats per 1,000 Residents"</span>) <span class="sc">+</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="assignment4_35196726_files/figure-html/equity-analysis-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="assignment4_35196726_files/figure-html/equity-plot-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -462,36 +730,148 @@ $ location                         &lt;chr&gt; "-37.81036225, 144.9710753", "-37
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(seats_per_1000 <span class="sc">~</span> median_weekly_income, <span class="at">data =</span> equity_data)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>equity_data <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">CLUE small area</span><span class="st">`</span>, median_weekly_income, seats_per_1000) <span class="sc">|&gt;</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(median_weekly_income)) <span class="sc">|&gt;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Suburb"</span>, <span class="st">"Median Weekly Income ($)"</span>, <span class="st">"Seats per 1,000 Residents"</span>),</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">digits =</span> <span class="dv">0</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = seats_per_1000 ~ median_weekly_income, data = equity_data)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--1313.0  -535.4   104.6   238.0  1733.0 
-
-Coefficients:
-                      Estimate Std. Error t value Pr(&gt;|t|)  
-(Intercept)          4963.7971  1431.3903   3.468   0.0104 *
-median_weekly_income   -2.1924     0.7343  -2.986   0.0204 *
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 955.7 on 7 degrees of freedom
-Multiple R-squared:  0.5601,    Adjusted R-squared:  0.4973 
-F-statistic: 8.914 on 1 and 7 DF,  p-value: 0.02035</code></pre>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Median weekly household income and café seats per 1,000 residents by suburb (2024)</caption>
+<colgroup>
+<col style="width: 36%">
+<col style="width: 31%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Suburb</th>
+<th style="text-align: right;">Median Weekly Income ($)</th>
+<th style="text-align: right;">Seats per 1,000 Residents</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Port Melbourne</td>
+<td style="text-align: right;">2347</td>
+<td style="text-align: right;">56</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">East Melbourne</td>
+<td style="text-align: right;">2345</td>
+<td style="text-align: right;">412</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kensington</td>
+<td style="text-align: right;">2216</td>
+<td style="text-align: right;">118</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Yarra</td>
+<td style="text-align: right;">2078</td>
+<td style="text-align: right;">27</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Docklands</td>
+<td style="text-align: right;">1956</td>
+<td style="text-align: right;">818</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Southbank</td>
+<td style="text-align: right;">1930</td>
+<td style="text-align: right;">715</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Parkville</td>
+<td style="text-align: right;">1885</td>
+<td style="text-align: right;">296</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">West Melbourne (Residential)</td>
+<td style="text-align: right;">1784</td>
+<td style="text-align: right;">225</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">North Melbourne</td>
+<td style="text-align: right;">1718</td>
+<td style="text-align: right;">225</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Melbourne (CBD)</td>
+<td style="text-align: right;">1319</td>
+<td style="text-align: right;">1716</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Carlton</td>
+<td style="text-align: right;">1289</td>
+<td style="text-align: right;">825</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
+<p>Port Melbourne ($2,347/week), East Melbourne ($2,345/week), and Kensington ($2,216/week) are the three wealthiest suburbs in this dataset — yet they have just 56, 412, and 118 café seats per 1,000 residents respectively. The CBD, by contrast, has a median income of $1,319/week but 1,716 seats per 1,000 residents. The café scene isn’t where people live richly. It’s where people pass through.</p>
+</section>
+<section id="tldr" class="level3">
+<h3 class="anchored" data-anchor-id="tldr">TL;DR</h3>
+<p>This analysis shows that three things stand out about Melbourne’s cafe culture.</p>
+<ul>
+<li>Growth peaked in 2017 and was already declining before COVID hit.</li>
+<li>The scene is far more geographically concentrated than Melbourne’s reputation suggests.</li>
+<li>Café access doesn’t follow residential wealth — it follows foot traffic.</li>
+</ul>
+<p>Melbourne’s café culture is real, but it’s actually operating in a pretty small radius.</p>
+</section>
+<section id="what-id-dig-into-next" class="level3">
+<h3 class="anchored" data-anchor-id="what-id-dig-into-next">What I’d dig into next</h3>
+<p>This analysis can further be extended by asking the following follow-up questions :</p>
+<ul>
+<li>Are larger venues replacing smaller ones, or are there simply fewer cafés overall?</li>
+<li>Does the post-COVID recovery look different across suburbs?</li>
+<li>Would overlaying public transport density explain the concentration better than income does?</li>
+</ul>
+</section>
 <section id="references-1" class="level3">
 <h3 class="anchored" data-anchor-id="references-1">References</h3>
+<p>Müller K (2025). <em>here: A Simpler Way to Find Your Files</em>. R package version 1.0.2, <a href="https://CRAN.R-project.org/package=here" class="uri">https://CRAN.R-project.org/package=here</a>.</p>
+<p>Pebesma, E., 2018. Simple Features for R: Standardized Support for Spatial Vector Data. The R Journal 10 (1), 439-446, <a href="https://doi.org/10.32614/RJ-2018-009" class="uri">https://doi.org/10.32614/RJ-2018-009</a></p>
+<p>Pedersen T (2025). <em>patchwork: The Composer of Plots</em>. R package version 1.3.2, <a href="https://CRAN.R-project.org/package=patchwork" class="uri">https://CRAN.R-project.org/package=patchwork</a>.</p>
+<p>Slowikowski K (2026). <em>ggrepel: Automatically Position Non-Overlapping Text Labels with ‘ggplot2’</em>. R package version 0.9.8, <a href="https://CRAN.R-project.org/package=ggrepel" class="uri">https://CRAN.R-project.org/package=ggrepel</a>.</p>
+<p>Wickham H, Averick M, Bryan J, Chang W, McGowan LD, François R, Grolemund G, Hayes A, Henry L, Hester J, Kuhn M, Pedersen TL, Miller E, Bache SM, Müller K, Ooms J, Robinson D, Seidel DP, Spinu V, Takahashi K, Vaughan D, Wilke C, Woo K, Yutani H (2019). “Welcome to the tidyverse.” <em>Journal of Open Source Software</em>, <em>4</em>(43), 1686. doi:10.21105/joss.01686 <a href="https://doi.org/10.21105/joss.01686" class="uri">https://doi.org/10.21105/joss.01686</a>.</p>
+<p>Wickham H, Bryan J (2025). <em>readxl: Read Excel Files</em>. R package version 1.4.5, <a href="https://CRAN.R-project.org/package=readxl" class="uri">https://CRAN.R-project.org/package=readxl</a>.</p>
 </section>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-
+<section id="question-5" class="level3">
+<h3 class="anchored" data-anchor-id="question-5">Question 5</h3>
+<p><em>Tell us about parts of your data processing or analysis that weren’t “sexy” and wouldn’t typically be included in a blog post. (e.g.&nbsp;Was their any data drudgery or time intensive wrangling? Were there any repetitive tasks or manual tasks? If it was easy, describe what made it easy?)</em></p>
+<p>As with assignment 2, the most tedious part of this analysis was reconciling two data sets that use two completely different geographic classifications.</p>
+<p>The CLUE data uses City of Melbourne administrative boundaries, while ABS uses SA2 boundaries with entirely different names. This led to manually inspecting every suburb name in both data sets and constructing a look up table. SA2 was chosen as it is the ABS geographic unit that most closely approximates a suburb, and is the finest level at which median household income is published in the Census.</p>
+<p>Also, the ABS metadata file added an another layer of complexity, I’d assumed the sheet would be named “SA2” but had to inspect all sheet names before finding the right one (“2021_ASGS_Main_Structures”).</p>
+<p>A repetitive task that had to be carried out was to download both G02 and G01 files from the ABS website, as population counts were essential for calculating cafe seats per 1,000 residents, which is a useful metric for my last sub-question than total seats alone.</p>
+<p>Also, the weighted mean aggregation then had to be repeated three times — for Southbank, Melbourne CBD, and South Yarra — each of which is split across multiple SA2s in the ABS data.</p>
+</section>
+<section id="question-6" class="level3">
+<h3 class="anchored" data-anchor-id="question-6">Question 6</h3>
+<p><em>Were there any challenges that you faced in conducting this analysis. These may take the form of data limitations or coding challenges? (e.g.&nbsp;Was there anything in your analysis that you were not anticipating when you started? Did you have to change your intended scope? Did you need to master a new skill? Were there any problems you were proud of solving?)</em></p>
+<p>I was surprised by how simple the CLUE dataset’s classifications were when compared to the ABS suburb boundaries. The Melbourne CBD, a single area according to the CLUE dataset, is split into 3 separate SA2s in the ABS data (Melbourne CBD East, North and West).Southbank is split across Southbank (West) - South Wharf and Southbank - East.South Yarra is split into three SA2s: South Yarra - West, South Yarra - North, and South Yarra - South.</p>
+<p>“Melbourne (Remainder)” has no ABS equivalent at all and had to be excluded. For each split suburb, I calculated a population-weighted mean income across all constituent SA2s rather than arbitrarily picking one (which is what I started with but then I applied the same process across these three suburbs of CBD, Southbank and South Yarra) this added complexity but produced a more defensible result.</p>
+<p>When I framed this question, I expected COVID to be the clear turning point. I didn’t anticipate that the pre-COVID decline in seating would predate 2020.The data showed seating already falling from 2018, which changed the framing of the entire growth section.</p>
+</section>
+<section id="question-7" class="level3">
+<h3 class="anchored" data-anchor-id="question-7">Question 7</h3>
+<p><em>Tell us about any imperfect parts of your work and how you would like to expand or improve this analysis in future? Be clear about any limitations or aspects of your analysis that fell beyond scope.</em></p>
+<p>The equity analysis covers 11 of the 13 CLUE suburbs — “Melbourne (Remainder)” and “West Melbourne (Industrial)” could not be matched to ABS SA2s and were excluded. More significantly, the CLUE dataset covers only the City of Melbourne LGA, excluding inner suburbs like Fitzroy, Collingwood, and Richmond that are central to Melbourne’s actual café culture (Coffee on Cue, n.d.).Any equity conclusions are therefore limited to a narrow geographic slice of the city.</p>
+<p>Again, as with assignment 2 - there is also a temporal mismatch.2021 Census income data paired with 2024 CLUE data means suburb demographics may have shifted in the intervening three years.</p>
+<p>In future, I would expand the analysis to cover all of metropolitan Melbourne using a broader business register, use 2026 Census data once available, and overlay public transport accessibility as a potentially stronger predictor of café concentration than residential income.</p>
+</section>
+<section id="references-2" class="level3">
+<h3 class="anchored" data-anchor-id="references-2">References</h3>
+<p>Coffee on Cue. (n.d.). Melbourne’s best coffee suburbs outside the CBD. <a href="https://www.coffeeoncue.com.au/blogs/melbourne/melbourne-best-coffee-suburbs-outside-cbd" class="uri">https://www.coffeeoncue.com.au/blogs/melbourne/melbourne-best-coffee-suburbs-outside-cbd</a></p>
+</section>
 </div>
 <div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
 

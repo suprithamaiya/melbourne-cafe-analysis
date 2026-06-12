@@ -1,6 +1,7 @@
 ---
 title: "ETC5512: Assignment 4"
 author: "Supritha Ramakrishna Maiya (35196726)"
+date: today
 format:
   html:
     code-fold: true
@@ -16,129 +17,104 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ::: {.panel-tabset}
 
 ## Data Details
+### Question 1
+*What is the question you are aiming to answer in your blog post? (You may have multiple sub-questions.) Share why you chose this question.*
+
+How has Melbourne's café and dining scene evolved over two decades (2002–2024), and is seating capacity distributed equitably across suburbs?
+
+This question is explored through three sub-questions:
+
+- How has Melbourne's café scene grown from 2002 to 2024, and which suburbs have consistently dominated by seating capacity?
+- Did COVID-19 (2020–2021) cause a measurable shift from indoor to outdoor seating across Melbourne?
+- Do higher-income suburbs have disproportionately more seating capacity per resident? 
+
+I chose this question because I come from Bangalore - also a coffee city. South Indian filter coffee is famous among Bangaloreans, and in recent years Bangalore's café culture has expanded far beyond that signature drink, with roasters like Blue Tokai, Benki Coffee, and Hatti Kappi redefining the scene. 
+
+Moving to Melbourne, a city whose café culture is part of its global identity, I was curious whether that reputation is actually backed by data — and whether it extends equally across the city.
+
+### Question 2
+*What data will you be using to answer that question? Explain why this data is suitable for the task. This means make clear the type of data (census, sample, experimental), data licence, data limitations and any ethical considerations, including those related to data privacy. The relevant details here will depend on the data you choose and the analysis you perform.*
+
+Dataset 1 can be downloaded from the City of Melbourne Open Data Portal at data.melbourne.vic.gov.au, searching for "Café, Restaurant and Bistro Seats."
+
+**Dataset 1: Café, Restaurant and Bistro Seats — City of Melbourne CLUE**
+
+- **Source:** City of Melbourne Open Data Portal
+- **Type:** Census 
+- **Licence:** Creative Commons Attribution 4.0 International (CC BY 4.0)
+- **Coverage:** 2002–2024
+- **Variables used:** Census year, CLUE small area (suburb), Trading name, Business address, Seating type (Indoor/Outdoor), Number of seats, 
+  Longitude, Latitude
+- **Limitations:** Coverage is limited to the City of Melbourne LGA only — it does not capture broader metropolitan Melbourne. Seat counts reflect licensed capacity, not actual usage. Some records in early years (particularly 2002) have missing coordinate data.
+- **Ethics:** No personal data is involved. All records are at the business level only.
+
+
+Datasets 2–4 are available from the ABS Census DataPacks page. Select 2021 Census, General Community Profile, Victoria, SA2. Download G01 and G02 CSV files and the ASGS metadata Excel file. 
+
+**Dataset 2: ABS Census 2021 — General Community Profile (G02), Victoria, SA2**
+
+- **Source:** Australian Bureau of Statistics Census DataPacks
+- **Type:** Census — a complete population count
+- **Licence:** Creative Commons Attribution 4.0 International (CC BY 4.0)
+- **Variables used:** Median weekly household income (`Median_tot_hhd_inc_weekly`)
+- **Limitations:** 2021 Census data may not perfectly reflect 2024 suburb demographics. Also,SA2 boundaries do not align with CLUE small areas.
+- **Ethics:** Only aggregate-level data used. No individual records involved.
+
+**Dataset 3: ABS Census 2021 — General Community Profile (G01), Victoria, SA2**
+
+- **Source:** Australian Bureau of Statistics Census DataPacks
+- **Type:** Census
+- **Licence:** Creative Commons Attribution 4.0 International (CC BY 4.0)
+- **Variables used:** Total population (`Tot_P_P`)
+- **Limitations:** Same as Dataset 2.
+- **Ethics:** Aggregate data only.
+
+**Dataset 4: ABS 2021 Census — Geographic Descriptor File**
+
+- **Source:** Australian Bureau of Statistics Census DataPacks
+- **Type:** Reference/lookup file
+- **Licence:** Creative Commons Attribution 4.0 International (CC BY 4.0)
+- **Variables used:** SA2 codes and names for joining G01/G02 to suburb names
+
+### Question 3 
+*Describe the steps to download your data and any steps to process your data for your analysis. Save your raw and processed data.*
+
 ```{r load-libraries, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(here)
 library(sf)
 library(readxl)
+library(ggrepel)
+library(patchwork)
 ```
 
 ```{r load-clue-data}
 # Load raw CLUE café data
 clue_raw <- read_csv(here("data/raw/cafes-and-restaurants-with-seating-capacity.csv"))
-
-# Inspect
-glimpse(clue_raw)
-
-unique(clue_raw$`Census year`) |> sort()
-
-unique(clue_raw$`Industry (ANZSIC4) description`)
 ```
-
 
 ```{r filter-cafes}
 cafes <- clue_raw |>
   filter(`Industry (ANZSIC4) description` == "Cafes and Restaurants")
 
-# Quick check
-nrow(cafes)
-
 # Save filtered data
-write_csv(cafes, here("data/raw/cafes_filtered.csv"))
-```
-### References
-## Blog Post
-
-```{r growth-over-time}
-growth_total <- cafes |>
-  group_by(`Census year`) |>
-  summarise(
-    n_cafes = n_distinct(paste(`Trading name`, `Business address`)),
-    total_seats = sum(`Number of seats`, na.rm = TRUE),
-    .groups = "drop"
-  )
-
-# Line chart: total seats over time
-ggplot(growth_total, aes(x = `Census year`, y = total_seats)) +
-  geom_line(colour = "#6F4E37", linewidth = 1) +
-  geom_point(colour = "#6F4E37", size = 2) +
-  scale_x_continuous(breaks = seq(2002, 2024, by = 2)) +
-  labs(title = "Total Café Seating Capacity in Melbourne (2002–2024)",
-       x = "Year", y = "Total Seats") +
-  theme_minimal()
+write_csv(cafes, here("data/processed/cafes_filtered.csv"))
 ```
 
+The raw CLUE dataset contains multiple industry types. I filtered by the ANZSIC4 code "Cafes and Restaurants" only, as other categories (e.g. pubs, fast food) are outside the scope of this analysis.
 
-```{r spatial-map}
-library(patchwork)
-
-cafe_2002_sf <- cafes |>
-  filter(`Census year` == 2002) |>
-  filter(!is.na(Longitude), !is.na(Latitude)) |>
-  st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326)
-
-cafe_2024_sf <- cafes |>
-  filter(`Census year` == 2024) |>
-  filter(!is.na(Longitude), !is.na(Latitude)) |>
-  st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326)
-
-p2002 <- ggplot(cafe_2002_sf) +
-  geom_sf(aes(size = `Number of seats`), alpha = 0.4, colour = "#6F4E37") +
-  labs(title = "2002", size = "Seats") +
-  theme_void() +
-  theme(legend.position = "none")
-
-p2024 <- ggplot(cafe_2024_sf) +
-  geom_sf(aes(size = `Number of seats`), alpha = 0.4, colour = "#6F4E37") +
-  labs(title = "2024", size = "Seats") +
-  theme_void()
-
-p2002 + p2024 + 
-  plot_annotation(title = "Café Seating Capacity Across Melbourne: 2002 vs 2024")
-```
-
-```{r suburb-bar-chart}
+```{r create-suburb-2024}
 suburb_2024 <- cafes |>
   filter(`Census year` == 2024) |>
   group_by(`CLUE small area`) |>
   summarise(total_seats = sum(`Number of seats`, na.rm = TRUE),
             .groups = "drop") |>
   arrange(desc(total_seats))
-
-ggplot(suburb_2024, aes(x = reorder(`CLUE small area`, total_seats), 
-                         y = total_seats)) +
-  geom_col(fill = "#6F4E37") +
-  coord_flip() +
-  labs(title = "Total Café Seating by Suburb (2024)",
-       x = NULL, y = "Total Seats") +
-  theme_minimal()
 ```
 
+To enable an equity analysis, median household income and population data were drawn from the ABS 2021 Census. CLUE uses its own suburb naming conventions that differ from ABS SA2 names, a manual look up table is constructed to bridge the two systems, where a CLUE suburb maps to multiple ABS SA2s (e.g. Southbank spans two SA2s), a population-weighted mean income was calculated rather than a simple average.
 
-```{r covid-seating}
-covid_period <- cafes |>
-  filter(`Census year` >= 2018) |>
-  group_by(`Census year`, `Seating type`) |>
-  summarise(total_seats = sum(`Number of seats`, na.rm = TRUE),
-            .groups = "drop")
-
-ggplot(covid_period, aes(x = `Census year`, y = total_seats, 
-                          colour = `Seating type`)) +
-  geom_line(linewidth = 1) +
-  geom_point(size = 2) +
-  geom_vline(xintercept = 2020, linetype = "dashed", colour = "red") +
-  annotate("text", x = 2020.2, y = max(covid_period$total_seats) * 0.95,
-           label = "COVID-19", hjust = 0, colour = "red", size = 3.5) +
-  scale_colour_manual(values = c("Seats - Indoor" = "#6F4E37", 
-                                  "Seats - Outdoor" = "#D4A574")) +
-  scale_x_continuous(breaks = 2018:2024) +
-  labs(title = "Indoor vs Outdoor Café Seating Before and After COVID-19",
-       x = "Year", y = "Total Seats", colour = "Seating Type") +
-  theme_minimal()
-```
-
-
-```{r equity-analysis}
+```{r load-abs-data}
 # SA2 lookup
 sa2_lookup <- read_excel(
   here("data/raw/Metadata/2021Census_geog_desc_1st_2nd_3rd_release.xlsx"),
@@ -165,10 +141,49 @@ abs_data <- g02 |>
   left_join(sa2_lookup, by = "SA2_CODE_2021") |>
   select(suburb = SA2_NAME_2021, median_weekly_income, population)
 
+# Aggregate split Southbank SA2s using population-weighted mean
+southbank_weighted <- abs_data |>
+  filter(str_detect(suburb, "Southbank")) |>
+  summarise(
+    suburb = "Southbank",
+    median_weekly_income = weighted.mean(median_weekly_income, population),
+    population = sum(population)
+  )
+
+abs_data <- abs_data |>
+  filter(!str_detect(suburb, "Southbank")) |>
+  bind_rows(southbank_weighted)
+
+# Aggregate split CBD SA2s using population-weighted mean
+cbd_weighted <- abs_data |>
+  filter(str_detect(suburb, "Melbourne CBD")) |>
+  summarise(
+    suburb = "Melbourne (CBD)",
+    median_weekly_income = weighted.mean(median_weekly_income, population),
+    population = sum(population)
+  )
+
+abs_data <- abs_data |>
+  filter(!str_detect(suburb, "Melbourne CBD")) |>
+  bind_rows(cbd_weighted)
+
+# Aggregate split CBD SA2s using population-weighted mean
+southyarra_weighted <- abs_data |>
+  filter(str_detect(suburb, "South Yarra")) |>
+  summarise(
+    suburb = "South Yarra",
+    median_weekly_income = weighted.mean(median_weekly_income, population),
+    population = sum(population)
+  )
+
+abs_data <- abs_data |>
+  filter(!str_detect(suburb, "South Yarra")) |>
+  bind_rows(southyarra_weighted)
+
 # Manual suburb name mapping
 name_mapping <- tribble(
   ~clue_name,                        ~abs_name,
-  "Melbourne (CBD)",                  "Melbourne CBD - North",
+  "Melbourne (CBD)",                  "Melbourne (CBD)",
   "Carlton",                          "Carlton",
   "Docklands",                        "Docklands",
   "East Melbourne",                   "East Melbourne",
@@ -176,20 +191,167 @@ name_mapping <- tribble(
   "North Melbourne",                  "North Melbourne",
   "Parkville",                        "Parkville",
   "Southbank",                        "Southbank",
-  "South Yarra",                      "South Yarra - West",
+  "South Yarra",                      "South Yarra",
   "Port Melbourne",                   "Port Melbourne",
-  "West Melbourne (Industrial)",      "West Melbourne",
-  "West Melbourne (Residential)",     "West Melbourne"
+  "West Melbourne (Industrial)",      "West Melbourne - Industrial",
+  "West Melbourne (Residential)",     "West Melbourne - Residential"
 )
 
-# Join seating data with ABS data
+# Build equity dataset
 equity_data <- suburb_2024 |>
   left_join(name_mapping, by = c("CLUE small area" = "clue_name")) |>
   left_join(abs_data, by = c("abs_name" = "suburb")) |>
   filter(!is.na(median_weekly_income)) |>
   mutate(seats_per_1000 = (total_seats / population) * 1000)
 
-# Scatter plot: seats per 1000 residents vs median income
+write_csv(equity_data, here("data/processed/cafe_equity_analysis.csv"))
+```
+
+### Question 4
+*In your submission, include comprehensive details of the data you used (e.g. read me, meta data file, a data dictionary. This may also include a sample data example if useful.)*
+
+| Variable | Dataset | Description | Type |
+|---|---|---|---|
+| Census year | CLUE | Year of the annual business census (2002–2024) | Numeric |
+| CLUE small area | CLUE | Suburb/precinct name within City of Melbourne LGA | Character |
+| Trading name | CLUE | Business trading name | Character |
+| Business address | CLUE | Full street address of business | Character |
+| Industry (ANZSIC4) description | CLUE | Business industry classification | Character |
+| Seating type | CLUE | Indoor or outdoor seating | Character |
+| Number of seats | CLUE | Licensed seating capacity | Numeric |
+| Longitude | CLUE | WGS84 longitude coordinate | Numeric |
+| Latitude | CLUE | WGS84 latitude coordinate | Numeric |
+| Median_tot_hhd_inc_weekly | ABS G02 | Median weekly household income by SA2 | Numeric |
+| Tot_P_P | ABS G01 | Total resident population by SA2 | Numeric |
+| SA2_CODE_2021 | ABS Metadata | 9-digit SA2 geographic code | Character |
+| SA2_NAME_2021 | ABS Metadata | SA2 suburb name | Character |
+| seats_per_1000 | Derived | Café seats per 1,000 residents (total_seats / population × 1000) | Numeric |
+
+
+### References
+
+City of Melbourne Open Data Team. (2015). Cafes and restaurants with seating capacity [Data set]. Melbourne Open Data Portal. <https://data.melbourne.vic.gov.au/explore/dataset/cafes-and-restaurants-with-seating-capacity/information/>
+
+Australian Bureau of Statistics. (2021). 2021 Census community profiles: General community profile (G01) [Data set]. <https://www.abs.gov.au/census/find-census-data/datapacks>
+
+Australian Bureau of Statistics. (2021). 2021 Census community profiles: Selected medians and averages (G02) [Data set]. <https://www.abs.gov.au/census/find-census-data/datapacks>
+
+Australian Bureau of Statistics. (2021). 2021 Australian Statistical Geography Standard (ASGS) geographic structures [Data file]. <https://www.abs.gov.au/census/find-census-data/datapacks>
+
+## Blog Post
+
+I grew up in Bangalore,another city that takes its coffee seriously. When I moved to Melbourne, I heard that Melbourne is synonymous with café culture.
+Is that reputation backed by data? 
+
+Using two decades of business census data from the City of Melbourne, this post looks at how the café scene has grown, where it actually lives, what COVID did to it, and whether café access follows wealth.
+
+### The decline that predates COVID
+```{r growth-over-time}
+growth_total <- cafes |>
+  group_by(`Census year`) |>
+  summarise(
+    n_cafes = n_distinct(paste(`Trading name`, `Business address`)),
+    total_seats = sum(`Number of seats`, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# Line chart: total seats over time
+ggplot(growth_total, aes(x = `Census year`, y = total_seats)) +
+  geom_line(colour = "#6F4E37", linewidth = 1) +
+  geom_point(colour = "#6F4E37", size = 2) +
+  scale_x_continuous(breaks = seq(2002, 2024, by = 2)) +
+  labs(title = "Total Café Seating Capacity in Melbourne (2002–2024)",
+       x = "Year", y = "Total Seats") +
+  theme_minimal()
+```
+
+```{r number-of-cafes}
+growth_total |> 
+  arrange(`Census year`) |>
+  knitr::kable(
+    col.names = c("Year", "Number of Cafés", "Total Seats"),
+    digits = 0
+  )
+```
+
+
+```{r spatial-map}
+cafe_2002_sf <- cafes |>
+  filter(`Census year` == 2002) |>
+  filter(!is.na(Longitude), !is.na(Latitude)) |>
+  st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326)
+
+cafe_2024_sf <- cafes |>
+  filter(`Census year` == 2024) |>
+  filter(!is.na(Longitude), !is.na(Latitude)) |>
+  st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326)
+
+p2002 <- ggplot(cafe_2002_sf) +
+  geom_sf(aes(size = `Number of seats`), alpha = 0.4, colour = "#6F4E37") +
+  labs(title = "2002", size = "Seats") +
+  theme_void() +
+  theme(legend.position = "none")
+
+p2024 <- ggplot(cafe_2024_sf) +
+  geom_sf(aes(size = `Number of seats`), alpha = 0.4, colour = "#6F4E37") +
+  labs(title = "2024", size = "Seats") +
+  theme_void()
+
+p2002 + p2024 + 
+  plot_annotation(title = "Café Seating Capacity Across Melbourne: 2002 vs 2024")
+```
+Total seating capacity more than doubled between 2002 and 2017, climbing from 85,349 to 151,199 seats. The spatial maps show cafés spreading further across the inner city by 2024, with larger concentrations appearing outside the CBD core compared to 2002.
+
+But the growth story has a twist: the decline started before COVID. Seating was already falling from 2018 i.e. two years before the pandemic hit. And here's what makes it stranger: the number of cafés kept rising until 2019, even as total seats fell.
+
+This means that there were more venues but smaller ones. Way before COVID came into the picture, Melbourne's cafes were possibly impacted by other factors such as rising rents, shifting dining habits, or merely market saturation.
+
+### Where the coffee actually is
+```{r suburb-bar-chart}
+ggplot(suburb_2024, aes(x = reorder(`CLUE small area`, total_seats), 
+                         y = total_seats)) +
+  geom_col(fill = "#6F4E37") +
+  coord_flip() +
+  labs(title = "Total Café Seating by Suburb (2024)",
+       x = NULL, y = "Total Seats") +
+  theme_minimal()
+```
+The CBD absolutely dominates when it comes to cafes as it holds more than four times the seating of Southbank, the next highest suburb. Southbank, Carlton, and Docklands form a distant second tier, and every other suburb barely has a presence.
+
+Melbourne's café culture, for all its citywide reputation, is really an inner-CBD story.
+
+### The Impact of COVID
+
+```{r covid-seating}
+covid_period <- cafes |>
+  filter(`Census year` >= 2018) |>
+  group_by(`Census year`, `Seating type`) |>
+  summarise(total_seats = sum(`Number of seats`, na.rm = TRUE),
+            .groups = "drop")
+
+ggplot(covid_period, aes(x = `Census year`, y = total_seats, 
+                          colour = `Seating type`)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  geom_vline(xintercept = 2020, linetype = "dashed", colour = "red") +
+  annotate("text", x = 2020.2, y = max(covid_period$total_seats) * 0.95,
+           label = "COVID-19", hjust = 0, colour = "red", size = 3.5) +
+  scale_colour_manual(values = c("Seats - Indoor" = "#6F4E37", 
+                                  "Seats - Outdoor" = "#D4A574")) +
+  scale_x_continuous(breaks = 2018:2024) +
+  labs(title = "Indoor vs Outdoor Café Seating Before and After COVID-19",
+       x = "Year", y = "Total Seats", colour = "Seating Type") +
+  theme_minimal()
+```
+
+Indoor seats fell sharply,from around 124,000 in 2019 to 110,000 by 2021. Outdoor seating barely moved across the same period. Both seating types declined in parallel, which rules out the simple narrative that venues adapted by shifting outdoors. If venues were pivoting to alfresco dining as a survival strategy, it isn't visible here. 
+
+By 2024, indoor seating has partially recovered but remains below its pre-pandemic level. This current dataset cannot determine whether the pattern represents a permanent shift or a slow return to baseline.
+
+### Does wealth buy you better café access?
+I expected wealthier suburbs to have more cafés. The data says the opposite and the relationship is statistically significant (p = 0.013, R² = 0.55). Higher income is actually associated with fewer café seats per resident.
+
+```{r equity-plot}
 ggplot(equity_data, aes(x = median_weekly_income, y = seats_per_1000,
                          label = `CLUE small area`)) +
   geom_point(colour = "#6F4E37", size = 3) +
@@ -200,17 +362,137 @@ ggplot(equity_data, aes(x = median_weekly_income, y = seats_per_1000,
        y = "Café Seats per 1,000 Residents") +
   theme_minimal()
 ```
+
 ```{r regression-model}
+#| include: false
 model <- lm(seats_per_1000 ~ median_weekly_income, data = equity_data)
 summary(model)
 ```
 
+```{r wealthiest-suburbs}
+#| tbl-cap: "Median weekly household income and café seats per 1,000 residents by suburb (2024)"
+equity_data |> 
+  select(`CLUE small area`, median_weekly_income, seats_per_1000) |> 
+  arrange(desc(median_weekly_income)) |>
+  knitr::kable(
+    col.names = c("Suburb", "Median Weekly Income ($)", "Seats per 1,000 Residents"),
+    digits = 0
+  )
+```
+
+Port Melbourne ($2,347/week), East Melbourne ($2,345/week), and Kensington ($2,216/week) are the three wealthiest suburbs in this dataset — yet they have just 56, 412, and 118 café seats per 1,000 residents respectively. The CBD, by contrast, has a median income of $1,319/week but 1,716 seats per 1,000 residents. The café scene isn't where people live richly. It's where people pass through.
+
+### TL;DR
+
+This analysis shows that three things stand out about Melbourne's cafe culture.
+
+  - Growth peaked in 2017 and was already declining before COVID hit. 
+  - The scene is far more geographically concentrated than Melbourne's reputation suggests. 
+  - Café access doesn't follow residential wealth — it follows foot traffic.
+
+Melbourne's café culture is real, but it's actually operating in a pretty small radius.
+
+### What I'd dig into next
+
+This analysis can further be extended by asking the following follow-up questions :
+
+  - Are larger venues replacing smaller ones, or are there simply fewer cafés overall? 
+  - Does the post-COVID recovery look different across suburbs? 
+  - Would overlaying public transport density explain the concentration better than income does?
 
 ### References
 
+Müller K (2025). _here: A Simpler Way to Find Your Files_. R package version 1.0.2,
+  <https://CRAN.R-project.org/package=here>.
+
+Pebesma, E., 2018. Simple Features for R: Standardized Support for Spatial Vector Data. The R Journal 10 (1), 439-446,
+  <https://doi.org/10.32614/RJ-2018-009>
+
+Pedersen T (2025). _patchwork: The Composer of Plots_. R package version 1.3.2,
+  <https://CRAN.R-project.org/package=patchwork>.
+
+Slowikowski K (2026). _ggrepel: Automatically Position Non-Overlapping Text Labels with 'ggplot2'_. R package version
+  0.9.8, <https://CRAN.R-project.org/package=ggrepel>.
+
+Wickham H, Averick M, Bryan J, Chang W, McGowan LD, François R, Grolemund G, Hayes A, Henry L, Hester J, Kuhn M,
+  Pedersen TL, Miller E, Bache SM, Müller K, Ooms J, Robinson D, Seidel DP, Spinu V, Takahashi K, Vaughan D, Wilke C, Woo
+  K, Yutani H (2019). “Welcome to the tidyverse.” _Journal of Open Source Software_, *4*(43), 1686.
+  doi:10.21105/joss.01686 <https://doi.org/10.21105/joss.01686>.
+  
+Wickham H, Bryan J (2025). _readxl: Read Excel Files_. R package version 1.4.5,
+  <https://CRAN.R-project.org/package=readxl>.
+
 ## Behind the Scenes
 
+### Question 5
+*Tell us about parts of your data processing or analysis that weren’t “sexy” and wouldn’t typically be included in a blog post. (e.g. Was their any data drudgery or time intensive wrangling? Were there any repetitive tasks or manual tasks? If it was easy, describe what made it easy?)*
+
+As with assignment 2, the most tedious part of this analysis was reconciling two data sets that use two completely different geographic classifications.
+
+The CLUE data uses City of Melbourne administrative boundaries, while ABS uses SA2 boundaries with entirely different names. This led to manually inspecting every suburb name in both data sets and constructing a look up table. SA2 was chosen as it is the ABS geographic unit that most closely approximates a suburb, and is the finest level at which median household income is published in the Census.
+
+Also, the ABS metadata file added an another layer of complexity, I'd assumed the sheet would be named "SA2" but had to inspect all sheet names before finding the right one ("2021_ASGS_Main_Structures").
+
+A repetitive task that had to be carried out was to download both G02 and G01 files from the ABS website, as population counts were essential for calculating cafe seats per 1,000 residents, which is a useful metric for my last sub-question than total seats alone.
+
+Also, the weighted mean aggregation then had to be repeated three times — for Southbank, Melbourne CBD, and South Yarra — each of which is split across multiple SA2s in the ABS data.
+
+### Question 6
+*Were there any challenges that you faced in conducting this analysis. These may take the form of data limitations or coding challenges? (e.g. Was there anything in your analysis that you were not anticipating when you started? Did you have to change your intended scope? Did you need to master a new skill? Were there any problems you were proud of solving?)*
+
+I was surprised by how simple the CLUE dataset's classifications were when compared to the ABS suburb boundaries. The Melbourne CBD, a single area according to the CLUE dataset, is split into 3 separate SA2s in the ABS data (Melbourne CBD East, North and West).Southbank is split across Southbank (West) - South Wharf and Southbank - East.South Yarra is split into three SA2s: South Yarra - West, South Yarra - North, and South Yarra - South.
+
+"Melbourne (Remainder)" has no ABS equivalent at all and had to be excluded. For each split suburb, I calculated a population-weighted mean income across all constituent SA2s rather than arbitrarily picking one (which is what I started with but then I applied the same process across these three suburbs of CBD, Southbank and South Yarra) this added complexity but produced a more defensible result.
+
+When I framed this question, I expected COVID to be the clear turning point. I didn't anticipate that the pre-COVID decline in seating would predate 2020.The data showed seating already falling from 2018, which changed the framing of the entire growth section.
+
+### Question 7
+*Tell us about any imperfect parts of your work and how you would like to expand or improve this analysis in future? Be clear about any limitations or aspects of your analysis that fell beyond scope.*
+
+The equity analysis covers 11 of the 13 CLUE suburbs — "Melbourne (Remainder)" and "West Melbourne (Industrial)" could not be matched to ABS SA2s and were excluded. More significantly, the CLUE dataset covers only the City of Melbourne LGA, excluding inner suburbs like Fitzroy, Collingwood, and Richmond that are central to Melbourne's actual café culture (Coffee on Cue, n.d.).Any equity conclusions are therefore limited to a narrow geographic slice of the city.
+
+Again, as with assignment 2 - there is also a temporal mismatch.2021 Census income data paired with 2024 CLUE data means suburb demographics may have shifted in the intervening three years.
+
+In future, I would expand the analysis to cover all of metropolitan Melbourne using a broader business register, use 2026 Census data once available, and overlay public transport accessibility as a potentially stronger predictor of café concentration than residential income.
+
+### Question 8
+*Tell us about how you used AI in your approach to your assignment. (e.g. Was AI consistently reliable? Did you provide AI with additional context? Was there anywhere where you questioned or verified the AI outputs? Was there anywhere we AI helped you learn something new?)*
+
+AI was useful for explaining topics such as coordinate reference systems, EPSG codes, and population-weighted means. However, I did not assume its responses were always correct and verified important information against official ABS documentation where necessary.
+
+AI was used mainly as a troubleshooting and learning tool throughout the assignment. I provided detailed context, including code snippets, dataset structures, and intermediate outputs, to help diagnose problems and understand unfamiliar concepts.
+
+Overall, AI served as a learning and troubleshooting resource, while the analysis, coding, interpretation, and writing were my own work.
+### Question 9
+*Submit 4 earlier versions of your .qmd files to show your iterative process. These versions must show iterations of your work (not just a linear progression of Task 1, Task 2, Task 3, citations). Reflect on the progress made between each versions by providing a short statement for markers of what you fixed/learnt/improved/changed between each file. Also like to reflect on what changed between your first checklist submission. (Note: There is an expectation for students familiar with GitHub that you will submit a Github repository and refer to 4 individual commits.)*
+
+My GitHub repository is at https://github.com/suprithamaiya/melbourne-cafe-analysis. 
+The commits document the iterative process:
+V1: Basic scaffolding — CLUE data loading, filtering, and initial charts. I was still exploring what to proceed with.
+V2: Added equity analysis, suburb bar chart, scatter plot, regression, and references placeholders. Identified the geographic boundary mismatch as a key challenge.
+V3: I began to write the content and realized a lot of my initial assumptions about the data were incorrect.Restructured Task 1, made various code changes, completed blog post write-up.
+
+### References 
+
+Coffee on Cue. (n.d.). Melbourne's best coffee suburbs outside the CBD. <https://www.coffeeoncue.com.au/blogs/melbourne/melbourne-best-coffee-suburbs-outside-cbd>
 
 ## AI Acknowledgement
+
+AI was used mainly as a troubleshooting resource during my data exploration data processing.
+
+In practice, I used AI to:
+
+- Explain R functions and concepts needed to clean and tidy my data.
+
+- Provide general advice on coding approaches in R, which I then adapted and applied to my own dataset.
+
+- Help troubleshoot coding errors and understand unfamiliar topics such as coordinate reference systems and weighted means.
+
+The processing decisions, coding, and written submission were done by me.
+
+Here is the link(s) to all prompts used :
+
+<https://claude.ai/chat/c7cc28ec-c567-44df-8db2-e8d4a4aa99ab>
+
 
 :::
