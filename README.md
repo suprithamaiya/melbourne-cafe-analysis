@@ -19,6 +19,7 @@ How has Melbourne's café and dining scene evolved over two decades
 - ABS ASGS 2021 Geographic Descriptor File
 
 ## File Structure
+```
 data/
   raw/
     2021Census_G01_VIC_SA2.csv
@@ -39,6 +40,8 @@ data/
   data-dictionary.csv
   sample-clue.csv
   sample-equity.csv
+  
+```
 
 ## How to Reproduce
 1. Download data files from sources listed above and place in data/raw/
@@ -46,4 +49,8 @@ data/
 3. Render assignment4_35196726.qmd
 
 ## Requirements
-R packages: tidyverse, here, sf, readxl, ggrepel, patchwork
+R packages: 
+```
+tidyverse, here, sf, readxl, ggrepel, patchwork
+
+```
