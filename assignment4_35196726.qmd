@@ -630,7 +630,7 @@ Overall, AI served as a learning and troubleshooting resource, while the analysi
 ### Question 9
 *Submit 4 earlier versions of your .qmd files to show your iterative process. These versions must show iterations of your work (not just a linear progression of Task 1, Task 2, Task 3, citations). Reflect on the progress made between each versions by providing a short statement for markers of what you fixed/learnt/improved/changed between each file. Also like to reflect on what changed between your first checklist submission. (Note: There is an expectation for students familiar with GitHub that you will submit a Github repository and refer to 4 individual commits.)*
 
-My GitHub repository is at <https://github.com/suprithamaiya/melbourne-cafe-analysis.git>
+My GitHub repository is at <https://github.com/suprithamaiya/melbourne-cafe-analysis>
 
 The commits document the iterative process:
 
